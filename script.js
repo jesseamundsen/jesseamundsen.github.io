@@ -13,13 +13,24 @@ function init() {
                     iconSize: [iconsz, iconsz]
                 })
             }).on('click', function(e) {
-                display(data[i]["state"]
-                    ,response.find(x => x.state === data[i]["state"])["positive"]
-                    ,response.find(x => x.state === data[i]["state"])["totalTestResults"]
-                    ,response.find(x => x.state === data[i]["state"])["death"]
-                    );
+                display(data[i]["state"]);
             }).addTo(map);
-        })
+            $("#table tbody").append(
+                '<tr>'
+               +'<td>'+data[i]["state"]+'</td>'
+               +'<td>'+data[i]["pop"]+'</td>'
+               +'<td>'+response.find(x => x.state === data[i]["state"])["positive"]+'</td>'
+               +'<td>'+response.find(x => x.state === data[i]["state"])["totalTestResults"]+'</td>'
+               +'<td>'+response.find(x => x.state === data[i]["state"])["death"]+'</td>'
+               +'<td>'+round((response.find(x => x.state === data[i]["state"])["positive"]/data[i]["pop"])*1000)+'</td>'
+               +'<td>'+round((response.find(x => x.state === data[i]["state"])["totalTestResults"]/data[i]["pop"])*1000)+'</td>'
+               +'<td>'+round((response.find(x => x.state === data[i]["state"])["death"]/data[i]["pop"])*1000)+'</td>'
+               +'</tr>');
+        });
+        $('#table').DataTable({
+            "paging": false
+        });
+        $('#tablewrapper').show();
     });
 
 }
@@ -34,9 +45,13 @@ function iconsize(count) {
     return 2+(2*i);
 }
 
-function display(state, cases, tests, deaths) {
-    $("#table tbody").html('').append('<tr><td>'+state+'</td><td>'+cases+'</td><td>'+tests+'</td><td>'+deaths+'</td></tr>');
+function round(v) {
+    return (Math.round(v*1000)/1000).toFixed(3);
+}
+
+function display(state) {
     $.getJSON("https://covidtracking.com/api/states/daily?state=" + state, function(response) {
+
         var datax = [];
         var datay_cases = [];
         var datay_tests = [];
@@ -76,5 +91,5 @@ function display(state, cases, tests, deaths) {
         );
 
     });
-    $("#hidden").show();
+    $("#plotwrapper").show();
 }
