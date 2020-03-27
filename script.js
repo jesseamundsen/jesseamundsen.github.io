@@ -54,9 +54,7 @@ function display(state, cases, tests, deaths) {
                  x: datax
                 ,y: datay_cases
              }]
-            ,{
-                 margin:{t:0}
-            }
+            ,{title: {text: "Cases"}}
         );
 
         var plot_tests = document.getElementById('display_tests');
@@ -65,9 +63,7 @@ function display(state, cases, tests, deaths) {
                  x: datax
                 ,y: datay_tests
              }]
-            ,{
-                 margin:{t:0}
-            }
+            ,{title: {text: "Tests"}}
         );
 
         var plot_deaths = document.getElementById('display_deaths');
@@ -76,10 +72,9 @@ function display(state, cases, tests, deaths) {
                  x: datax
                 ,y: datay_deaths
              }]
-            ,{
-                 margin:{t:0}
-            }
+             ,{title: {text: "Deaths"}}
         );
 
     });
+    $("#hidden").show();
 }
