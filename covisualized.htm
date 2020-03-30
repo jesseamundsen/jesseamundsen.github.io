@@ -14,53 +14,65 @@
         <link rel="stylesheet" href="styles.css"/>
     </head>
     <body onload="init()">
-        
-        <h1>
-            COVIzualizeD
-        </h1>
 
-        <p>
-            Click on a state marker to load data.
-        </p>
-        
-        <div id="map" style="width:800px;height:400px;border: 1px solid black;"></div>
+        <div id="top" style="width:100%;height:400px;">
 
-        <div id="tablewrapper" style="display:none;">
-            <table id="table">
-                <thead>
-                    <th>
-                        State
-                    </th>
-                    <th>
-                        Population
-                    </th>
-                    <th>
-                        Cases
-                    </th>
-                    <th>
-                        Tests
-                    </th>
-                    <th>
-                        Deaths
-                    </th>
-                    <th>
-                        Cases per 1,000 Population
-                    </th>
-                    <th>
-                        Tests per 1,000 Population
-                    </th>
-                    <th>
-                        Deaths per 1,000 Population
-                    </th>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div id="map" style="width:50%;height:400px;float:left;border-right: 2px solid black;box-sizing: border-box;"></div>
+
+            <div id="plotwrapper" class="hidden" style="width:50%;height:40px;float:right;">
+                <div id="measurewrapper" style="margin-top:8px; text-align:center;">
+                    Data for <span id="currentstate"></span>
+                    <select id="measure">
+                        <option value="total">Cases</option>
+                        <option value="sevenday">1-Week Cases</option>
+                        <option value="tests">Tests</option>
+                        <option value="deaths">Deaths</option>
+                    </select>
+                </div>
+                <div id="displaywrapper" style="width:100%;height:360px">
+                    <div id="display" style="width:100%;height:100%"></div>
+                </div>
+            </div>
+    
         </div>
 
-        <div id="plotwrapper" style="display:none;">
-            <div id="display_cases" style="width:800px;height:400px;border:1px solid black;margin:10px;"></div>
-            <div id="display_tests" style="width:800px;height:400px;border:1px solid black;margin:10px;"></div>
-            <div id="display_deaths" style="width:800px;height:400px;border:1px solid black;margin:10px;"></div>
+        <div id="bottom" style="clear:both;overflow-y:scroll;overflow-x:hidden;border-collapse:collapse;border-top: 2px solid black; background-color: whitesmoke;">
+
+            <div id="tablewrapper" class="hidden" style="padding: 8px;">
+                <table id="table">
+                    <thead>
+                        <th>
+                            Rank
+                        </th>
+                        <th>
+                            State
+                        </th>
+                        <th>
+                            Population
+                        </th>
+                        <th>
+                            Cases
+                        </th>
+                        <th>
+                            Tests
+                        </th>
+                        <th>
+                            Deaths
+                        </th>
+                        <th>
+                            Cases per 1,000 Population
+                        </th>
+                        <th>
+                            Tests per 1,000 Population
+                        </th>
+                        <th>
+                            Deaths per 1,000 Population
+                        </th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
         </div>
 
     </body>

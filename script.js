@@ -1,7 +1,14 @@
+var state = "KY";
+
 function init() {
 
     var map = L.map("map").setView([40,-98], 4);
     var layer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+    var dt;
+
+    $(window).resize(function(){ 
+        windowsize();
+    });
 
     $.getJSON("https://covidtracking.com/api/states", function(response) {
         $.each(data, function(i) {
@@ -13,26 +20,48 @@ function init() {
                     iconSize: [iconsz, iconsz]
                 })
             }).on('click', function(e) {
-                display(data[i]["state"]);
+                state = data[i]["state"];
+                display();
             }).addTo(map);
             $("#table tbody").append(
-                '<tr>'
-               +'<td>'+data[i]["state"]+'</td>'
-               +'<td>'+data[i]["pop"]+'</td>'
-               +'<td>'+response.find(x => x.state === data[i]["state"])["positive"]+'</td>'
-               +'<td>'+response.find(x => x.state === data[i]["state"])["totalTestResults"]+'</td>'
-               +'<td>'+response.find(x => x.state === data[i]["state"])["death"]+'</td>'
-               +'<td>'+round((response.find(x => x.state === data[i]["state"])["positive"]/data[i]["pop"])*1000)+'</td>'
-               +'<td>'+round((response.find(x => x.state === data[i]["state"])["totalTestResults"]/data[i]["pop"])*1000)+'</td>'
-               +'<td>'+round((response.find(x => x.state === data[i]["state"])["death"]/data[i]["pop"])*1000)+'</td>'
-               +'</tr>');
+                 '<tr>'
+                +'<td>0</td>'
+                +'<td>'+data[i]["state"]+'</td>'
+                +'<td>'+data[i]["pop"]+'</td>'
+                +'<td>'+response.find(x => x.state === data[i]["state"])["positive"]+'</td>'
+                +'<td>'+response.find(x => x.state === data[i]["state"])["totalTestResults"]+'</td>'
+                +'<td>'+response.find(x => x.state === data[i]["state"])["death"]+'</td>'
+                +'<td>'+round((response.find(x => x.state === data[i]["state"])["positive"]/data[i]["pop"])*1000)+'</td>'
+                +'<td>'+round((response.find(x => x.state === data[i]["state"])["totalTestResults"]/data[i]["pop"])*1000)+'</td>'
+                +'<td>'+round((response.find(x => x.state === data[i]["state"])["death"]/data[i]["pop"])*1000)+'</td>'
+                +'</tr>'
+            );
         });
-        $('#table').DataTable({
-            "paging": false
+
+        dt = $('#table').DataTable({
+             paging: false
         });
+
+        dt.on('order.dt search.dt', function(){
+            dt.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            });
+        } ).draw();
+
+        windowsize();
+
         $('#tablewrapper').show();
+
+        display();
+
+        $("#measure").change(display);
+
     });
 
+}
+
+function windowsize() {
+    $('#bottom').css('height', $(window).height() - 400 - 2);
 }
 
 function iconsize(count) {
@@ -49,47 +78,66 @@ function round(v) {
     return (Math.round(v*1000)/1000).toFixed(3);
 }
 
-function display(state) {
+function display() {
+
+    $("#currentstate").html(state);
+
     $.getJSON("https://covidtracking.com/api/states/daily?state=" + state, function(response) {
 
+        var data = [];
         var datax = [];
-        var datay_cases = [];
-        var datay_tests = [];
-        var datay_deaths = [];
+        var datay = [];
+        var sevenday;
+
         $.each(response, function(i) {
-            datax.push(response[i]["date"].toString().slice(0,4)+"-"+response[i]["date"].toString().slice(4,6)+"-"+response[i]["date"].toString().slice(6,8));
-            datay_cases.push(response[i]["positive"]);
-            datay_tests.push(response[i]["totalTestResults"]);
-            datay_deaths.push(response[i]["death"]);
+            data.push({
+                "date": response[i]["date"].toString().slice(0,4)+"-"+response[i]["date"].toString().slice(4,6)+"-"+response[i]["date"].toString().slice(6,8)
+                ,"total": response[i]["positive"]
+                ,"new": response[i]["positiveIncrease"]
+                ,"sevenday": 0
+                ,"tests": response[i]["totalTestResults"]
+                ,"deaths": response[i]["death"]
+            });
         });
 
-        var plot_cases = document.getElementById('display_cases');
-        Plotly.newPlot(plot_cases
-            ,[{
-                 x: datax
-                ,y: datay_cases
-             }]
-            ,{title: {text: "Cases"}}
-        );
+        data = data.reverse();
 
-        var plot_tests = document.getElementById('display_tests');
-        Plotly.newPlot(plot_tests
-            ,[{
-                 x: datax
-                ,y: datay_tests
-             }]
-            ,{title: {text: "Tests"}}
-        );
+        for (var i=0; i < data.length; i++) {
+            sevenday = 0;
+            for (var j=0; j < 7; j++) {
+                if (i-j == 0) {
+                    break;
+                }
+                else {
+                    sevenday += data[i-j]["new"];
+                }
+            }
+            data[i]["sevenday"] = sevenday;
+        }
 
-        var plot_deaths = document.getElementById('display_deaths');
-        Plotly.newPlot(plot_deaths
+        $.each(data, function(i) {
+            datax.push(data[i]["date"]);
+            datay.push(data[i][$("#measure").val()]);
+        });
+
+        var plot = document.getElementById('display');
+        Plotly.newPlot(plot
             ,[{
                  x: datax
-                ,y: datay_deaths
-             }]
-             ,{title: {text: "Deaths"}}
+                ,y: datay
+             }],
+             {margin: {
+                t: 40
+                ,b: 40
+                ,r: 40
+                ,l: 40
+              }
+            }
+            ,{displayModeBar: false}
         );
 
     });
+
     $("#plotwrapper").show();
+
 }
