@@ -1,4 +1,4 @@
-data = [
+statedata = [
      {"state":"WY","pop":578759,"latitude":42.9918024,"longitude":-107.5419255}	
     ,{"state":"PA","pop":12801989,"latitude":40.9042486,"longitude":-77.8280624}	
     ,{"state":"OH","pop":11689100,"latitude":40.4149297,"longitude":-82.7119975}	
