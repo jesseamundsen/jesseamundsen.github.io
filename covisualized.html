@@ -22,8 +22,10 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
         <link rel="stylesheet" href="styles.css"/>
+        <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.6/css/fixedHeader.dataTables.min.css"/>
+        <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.6/js/dataTables.fixedHeader.min.js"></script>
         <script src="script.js"></script>
-        
+
     </head>
     <body onload="init()">
 
@@ -51,9 +53,8 @@
         </div>
 
         <div id="bottom" style="clear:both;overflow-y:scroll;overflow-x:hidden;border-collapse:collapse;border-top: 2px solid black; background-color: whitesmoke;">
-
             <div id="tablewrapper" class="hidden" style="padding: 8px;">
-                <table id="table">
+                <table id="table" style="position:relative">
                     <thead>
                         <th>
                             Rank
