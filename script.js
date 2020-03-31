@@ -35,7 +35,7 @@ function init() {
                 +'<td>'+currdata["deaths"]+'</td>'
                 +'<td>'+(currdata["positive"]/statedata[i]["pop"])*1000+'</td>'
                 +'<td>'+(currdata["totalTestResults"]/statedata[i]["pop"])*1000+'</td>'
-                +'<td>'+(currdata["death"]/statedata[i]["pop"])*1000+'</td>'
+                +'<td>'+(currdata["deaths"]/statedata[i]["pop"])*1000+'</td>'
                 +'</tr>'
             );
         });
