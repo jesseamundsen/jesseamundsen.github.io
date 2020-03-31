@@ -151,10 +151,17 @@ function display() {
         });
 
         var plot = document.getElementById('display');
+        var plottype = "scatter";
+
+        if ($("#measure").val() == "new") {
+            plottype = "bar";
+        }
+
         Plotly.newPlot(plot
             ,[{
                  x: datax
                 ,y: datay
+                ,type: plottype
              }],
              {margin: {
                 t: 40
