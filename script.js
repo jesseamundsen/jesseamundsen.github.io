@@ -33,9 +33,9 @@ function init() {
                 +'<td>'+currdata["positive"]+'</td>'
                 +'<td>'+currdata["totalTestResults"]+'</td>'
                 +'<td>'+currdata["death"]+'</td>'
-                +'<td>'+round((currdata["positive"]/statedata[i]["pop"])*1000)+'</td>'
-                +'<td>'+round((currdata["totalTestResults"]/statedata[i]["pop"])*1000)+'</td>'
-                +'<td>'+round((currdata["death"]/statedata[i]["pop"])*1000)+'</td>'
+                +'<td>'+(currdata["positive"]/statedata[i]["pop"])*1000+'</td>'
+                +'<td>'+(currdata["totalTestResults"]/statedata[i]["pop"])*1000+'</td>'
+                +'<td>'+(currdata["death"]/statedata[i]["pop"])*1000+'</td>'
                 +'</tr>'
             );
         });
@@ -44,6 +44,17 @@ function init() {
               paging: false
              ,searching: false
              ,info: false
+             ,columns: [
+                {render: $.fn.dataTable.render.number(",",".")}
+                 ,null
+                 ,{render: $.fn.dataTable.render.number(",",".")}
+                 ,{render: $.fn.dataTable.render.number(",",".")}
+                 ,{render: $.fn.dataTable.render.number(",",".")}
+                 ,{render: $.fn.dataTable.render.number(",",".")}
+                 ,{render: $.fn.dataTable.render.number(",",".",3)}
+                 ,{render: $.fn.dataTable.render.number(",",".",3)}
+                 ,{render: $.fn.dataTable.render.number(",",".",3)}
+             ]
         });
 
         dt.on('order.dt search.dt', function(){
@@ -82,10 +93,6 @@ function iconsize(count) {
         currvalue = currvalue/e;
     }
     return 2+(e*i);
-}
-
-function round(v) {
-    return (Math.round(v*1000)/1000).toFixed(3);
 }
 
 function display() {
