@@ -24,7 +24,7 @@ function init() {
                 display();
             }).addTo(map);
             $("#table tbody").append(
-                 '<tr>'
+                 '<tr onclick="tableclick(\''+data[i]["state"]+'\')">'
                 +'<td>0</td>'
                 +'<td>'+data[i]["state"]+'</td>'
                 +'<td>'+data[i]["pop"]+'</td>'
@@ -39,7 +39,9 @@ function init() {
         });
 
         dt = $('#table').DataTable({
-             paging: false
+              paging: false
+             ,searching: false
+             ,info: false
         });
 
         dt.on('order.dt search.dt', function(){
@@ -58,6 +60,11 @@ function init() {
 
     });
 
+}
+
+function tableclick(s) {
+    state = s;
+    display();
 }
 
 function windowsize() {

@@ -9,3 +9,7 @@ body {
 .hidden {
     display: none;
 }
+
+tr:hover {
+    cursor: pointer;
+}
