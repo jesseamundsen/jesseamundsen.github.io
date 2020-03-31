@@ -72,13 +72,14 @@ function windowsize() {
 }
 
 function iconsize(count) {
-    var i  = 0;
-    var currvalue = count / 2;
-    while (currvalue > 2) {
+    var e = 6;
+    var i = 0;
+    var currvalue = count / e;
+    while (currvalue > e) {
         i++;
-        currvalue = currvalue/2;
+        currvalue = currvalue/e;
     }
-    return 2+(2*i);
+    return 2+(e*i);
 }
 
 function round(v) {
