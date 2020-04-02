@@ -70,6 +70,7 @@ function init() {
         display();
 
         $("#measure").change(display);
+        $("#axistype").change(display);
 
     });
 
@@ -172,7 +173,8 @@ function display() {
                 ,b: 40
                 ,r: 40
                 ,l: 40
-              }
+              },
+              yaxis: {type: $("#axistype").val()}
             }
             ,{displayModeBar: false}
         );
