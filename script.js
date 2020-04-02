@@ -120,7 +120,6 @@ function display() {
 
         data = data.reverse();
 
-
         for (var i=0; i < data.length; i++) {
 
             // sevenday
@@ -136,15 +135,13 @@ function display() {
             data[i]["sevenday"] = sevenday;
 
             // doublerate
-            var remainder = data[i]["total"]*2;
-            var j = 0.0;
+            var j = 1.0;
             while (i-j > -1) {
-                if (remainder - data[i-j]["total"] > 0) {
-                    remainder = remainder - data[i-j]["total"];
+                if (data[i-j]["total"]/data[i]["total"] > .5) {
                     j += 1.0;
                 }
                 else {
-                    j += remainder / data[i-j]["total"];
+                    j += 1-(data[i-j]["total"]/(data[i]["total"]/2))
                     break;
                 }
             }
