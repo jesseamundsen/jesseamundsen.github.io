@@ -22,7 +22,7 @@ function init() {
                 })
             }).on('click', function(e) {
                 state = statedata[i]["state"];
-                display();
+                display(false);
             }).addTo(map);
             currdata = response.find(x => x.state === statedata[i]["state"]);
             $("#table tbody").append(
@@ -67,10 +67,10 @@ function init() {
 
         $('#tablewrapper').show();
 
-        display();
+        display(false);
 
-        $("#measure").change(display);
-        $("#axistype").change(display);
+        $("#measure").change(function() {display(true);});
+        $("#axistype").change(function() {display(true);});
 
     });
 
@@ -96,7 +96,7 @@ function iconsize(count) {
     return 2+(e*i);
 }
 
-function display() {
+function display(reset) {
 
     $("#currentstate").html(state);
 
@@ -155,26 +155,49 @@ function display() {
             datay.push(data[i][$("#measure").val()]);
         });
 
-        var plot = document.getElementById('display');
         var plottype = "scatter";
+        var plot = document.getElementById('display');
+        var plotdata = [];
 
         if ($("#measure").val() == "new") {
             plottype = "bar";
         }
 
-        Plotly.newPlot(plot
-            ,[{
-                 x: datax
+        // look if trace exists
+        if (plot.data) {
+            var i = plot.data.findIndex(x => x.name === state);
+            if (i > -1) {
+                plot.data.splice(i, 1);
+            }
+        }
+
+        if ($("#mode").val()=="add" && !reset) {
+            plotdata = plot.data;
+            plotdata.push({
+                name: state
+                ,x: datax
                 ,y: datay
                 ,type: plottype
-             }],
-             {margin: {
+            });
+        }
+        else {
+            plotdata = [{
+                name: state
+                ,x: datax
+                ,y: datay
+                ,type: plottype
+            }];
+        }
+
+        Plotly.newPlot(plot
+            ,plotdata
+            ,{margin: {
                 t: 40
                 ,b: 40
                 ,r: 40
                 ,l: 40
-              },
-              yaxis: {type: $("#axistype").val()}
+                },
+                yaxis: {type: $("#axistype").val()}
             }
             ,{displayModeBar: false}
         );
