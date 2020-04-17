@@ -93,7 +93,10 @@ function iconsize(count) {
         i++;
         currvalue = currvalue/e;
     }
-    return 2+(e*i);
+    if (i>10) {
+        i = 10;
+    }
+    return e+Math.pow(2,i);
 }
 
 function display(reset) {
