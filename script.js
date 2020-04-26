@@ -136,7 +136,7 @@ function display(reset) {
                     break;
                 }
                 else {
-                    sevenday += data[i-j]["new"];
+                    sevenday += data[i-j]["newcases"];
                 }
             }
             data[i]["sevenday"] = sevenday;
