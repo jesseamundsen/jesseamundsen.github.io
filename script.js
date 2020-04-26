@@ -113,12 +113,15 @@ function display(reset) {
         $.each(response, function(i) {
             data.push({
                 "date": response[i]["date"].toString().slice(0,4)+"-"+response[i]["date"].toString().slice(4,6)+"-"+response[i]["date"].toString().slice(6,8)
-                ,"total": response[i]["positive"]
-                ,"new": response[i]["positiveIncrease"]
+                ,"allcases": response[i]["positive"]
+                ,"alltests": response[i]["totalTestResults"]
+                ,"alldeaths": response[i]["death"]
+                ,"newcases": response[i]["positiveIncrease"]
+                ,"newtests": response[i]["totalTestResultsIncrease"]
+                ,"newhospitalized": response[i]["hospitalizedIncrease"]
+                ,"newdeaths": response[i]["deathIncrease"]
                 ,"sevenday": 0
                 ,"doublerate": 0
-                ,"tests": response[i]["totalTestResults"]
-                ,"deaths": response[i]["death"]
             });
         });
 
@@ -162,7 +165,7 @@ function display(reset) {
         var plot = document.getElementById('display');
         var plotdata = [];
 
-        if ($("#measure").val() == "new") {
+        if ($("#measure").val().substring(0,3) == "new") {
             plottype = "bar";
         }
 
