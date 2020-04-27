@@ -99,6 +99,17 @@ function iconsize(count) {
     return e+Math.pow(2,i);
 }
 
+function pct(n,t) {
+    var v = n/t;
+    if (v==1) {
+        return 0;
+    }
+    else
+    {
+        return v;
+    }
+}
+
 function display(reset) {
 
     $("#currentstate").html(state);
@@ -120,6 +131,7 @@ function display(reset) {
                 ,"newtests": response[i]["totalTestResultsIncrease"]
                 ,"newhospitalized": response[i]["hospitalizedIncrease"]
                 ,"newdeaths": response[i]["deathIncrease"]
+                ,"newpctpositive": pct(response[i]["positiveIncrease"], response[i]["totalTestResultsIncrease"])
                 ,"sevenday": 0
                 ,"doublerate": 0
             });
