@@ -165,11 +165,11 @@ function display(reset) {
             // doublerate
             var j = 1.0;
             while (i-j > -1) {
-                if (data[i-j]["total"]/data[i]["total"] > .5) {
+                if (data[i-j]["allcases"]/data[i]["allcases"] > .5) {
                     j += 1.0;
                 }
                 else {
-                    j += 1-(data[i-j]["total"]/(data[i]["total"]/2))
+                    j += 1-(data[i-j]["allcases"]/(data[i]["allcases"]/2))
                     break;
                 }
             }
