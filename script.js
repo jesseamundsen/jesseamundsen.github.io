@@ -120,7 +120,7 @@ function display(reset) {
         uri = "https://covidtracking.com/api/v1/us/daily.json";
     }
     else {
-        uri = "https://covidtracking.com/api/v1/states/daily.json?state=" + state;
+        uri = "https://covidtracking.com/api/v1/states/" + state  +"/daily.json?state=";
     }
 
     $.getJSON(uri, function(response) {
@@ -142,7 +142,6 @@ function display(reset) {
                 ,"newdeaths": response[i]["deathIncrease"]
                 ,"newpctpositive": pct(response[i]["positiveIncrease"], response[i]["totalTestResultsIncrease"])
                 ,"sevenday": 0
-                ,"doublerate": 0
             });
         });
 
@@ -161,19 +160,6 @@ function display(reset) {
                 }
             }
             data[i]["sevenday"] = sevenday;
-
-            // doublerate
-            var j = 1.0;
-            while (i-j > -1) {
-                if (data[i-j]["allcases"]/data[i]["allcases"] > .5) {
-                    j += 1.0;
-                }
-                else {
-                    j += 1-(data[i-j]["allcases"]/(data[i]["allcases"]/2))
-                    break;
-                }
-            }
-            data[i]["doublerate"] = j;
 
         }
 
