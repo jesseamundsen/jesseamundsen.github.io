@@ -71,6 +71,7 @@ function init() {
 
         $("#measure").change(function() {display(true);});
         $("#axistype").change(function() {display(true);});
+        $("#days").change(function() {display(true);});
 
     });
 
@@ -138,43 +139,25 @@ function display(reset) {
                 ,"alldeaths": response[i]["death"]
                 ,"newcases": response[i]["positiveIncrease"]
                 ,"newtests": response[i]["totalTestResultsIncrease"]
-                ,"newhospitalized": response[i]["hospitalizedIncrease"]
                 ,"newdeaths": response[i]["deathIncrease"]
                 ,"newpctpositive": pct(response[i]["positiveIncrease"], response[i]["totalTestResultsIncrease"])
-                ,"sevenday": 0
             });
         });
 
         data = data.reverse();
 
-        for (var i=0; i < data.length; i++) {
-
-            // sevenday
-            sevenday = 0;
-            for (var j=0; j < 7; j++) {
-                if (i-j == 0) {
-                    break;
-                }
-                else {
-                    sevenday += data[i-j]["newcases"];
-                }
-            }
-            data[i]["sevenday"] = sevenday;
-
+        if (data.length > $('#days').val()) {
+            data = data.slice(data.length - $('#days').val());
         }
-
         $.each(data, function(i) {
             datax.push(data[i]["date"]);
             datay.push(data[i][$("#measure").val()]);
         });
+        
 
         var plottype = "scatter";
         var plot = document.getElementById('display');
         var plotdata = [];
-
-        if ($("#measure").val().substring(0,3) == "new") {
-            plottype = "bar";
-        }
 
         // look if trace exists
         if (plot.data) {
@@ -184,21 +167,26 @@ function display(reset) {
             }
         }
 
-        if ($("#mode").val()=="add" && !reset) {
-            plotdata = plot.data;
-            plotdata.push({
+        if ($("#measure").val().substring(0,3) == "new") {
+            plotdata = [{
                 name: state
                 ,x: datax
                 ,y: datay
-                ,type: plottype
-            });
+                ,type: 'bar'
+            },
+            {
+                name: 'Average'
+                ,x: datax
+                ,y: avg(datay,7)
+                ,type: 'scatter'
+                ,line: {shape: 'spline', smoothing: 1.3}
+            }];
         }
         else {
             plotdata = [{
                 name: state
                 ,x: datax
                 ,y: datay
-                ,type: plottype
             }];
         }
 
@@ -219,4 +207,21 @@ function display(reset) {
 
     $("#plotwrapper").show();
 
+}
+
+function avg(data, series) {
+    var avgdata = [];
+    for (var i=0; i < data.length; i++) {
+        v = 0;
+        for (var j=0; j < series; j++) {
+            if (i-j == 0) {
+                break;
+            }
+            else {
+                v += data[i-j];
+            }
+        }
+        avgdata.push(v / series);
+    }
+    return avgdata;
 }
