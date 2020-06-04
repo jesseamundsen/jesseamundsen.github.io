@@ -121,7 +121,7 @@ function display() {
         uri = "https://covidtracking.com/api/v1/us/daily.json";
     }
     else {
-        uri = "https://covidtracking.com/api/v1/states/" + state  +"/daily.json";
+        uri = "https://covidtracking.com/api/v1/states/" + state.toLowerCase()  +"/daily.json";
     }
 
     $.getJSON(uri, function(response) {
