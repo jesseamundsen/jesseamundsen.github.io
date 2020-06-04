@@ -22,7 +22,7 @@ function init() {
                 })
             }).on('click', function(e) {
                 state = statedata[i]["state"];
-                display(false);
+                display();
             }).addTo(map);
             currdata = response.find(x => x.state === statedata[i]["state"]);
             $("#table tbody").append(
@@ -67,11 +67,11 @@ function init() {
 
         $('#tablewrapper').show();
 
-        display(false);
+        display();
 
-        $("#measure").change(function() {display(true);});
-        $("#axistype").change(function() {display(true);});
-        $("#days").change(function() {display(true);});
+        $("#measure").change(function() {display();});
+        $("#axistype").change(function() {display();});
+        $("#days").change(function() {display();});
 
     });
 
@@ -111,7 +111,7 @@ function pct(n,t) {
     }
 }
 
-function display(reset) {
+function display() {
 
     $("#currentstate").html(state);
 
@@ -121,7 +121,7 @@ function display(reset) {
         uri = "https://covidtracking.com/api/v1/us/daily.json";
     }
     else {
-        uri = "https://covidtracking.com/api/v1/states/" + state  +"/daily.json?state=";
+        uri = "https://covidtracking.com/api/v1/states/" + state  +"/daily.json";
     }
 
     $.getJSON(uri, function(response) {
