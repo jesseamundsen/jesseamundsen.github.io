@@ -151,7 +151,7 @@ function display() {
         }
         $.each(data, function(i) {
             datax.push(data[i]["date"]);
-            datay.push(data[i][fixvalue($("#measure").val())]);
+            datay.push(fixvalue(data[i][$("#measure").val()]));        
         });
         
 
