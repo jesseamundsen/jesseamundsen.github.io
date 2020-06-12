@@ -151,7 +151,7 @@ function display() {
         }
         $.each(data, function(i) {
             datax.push(data[i]["date"]);
-            datay.push(data[i][$("#measure").val()]);
+            datay.push(data[i][fixvalue($("#measure").val())]);
         });
         
 
@@ -207,6 +207,14 @@ function display() {
 
     $("#plotwrapper").show();
 
+}
+
+function fixvalue(v) {
+    var r = 0;
+    if (v > 0) {
+        r = v;
+    }
+    return r;
 }
 
 function avg(data, series) {
