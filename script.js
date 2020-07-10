@@ -87,7 +87,7 @@ function windowsize() {
 }
 
 function iconsize(count) {
-    var e = 6;
+    /*var e = 6;
     var i = 0;
     var currvalue = count / e;
     while (currvalue > e) {
@@ -97,7 +97,8 @@ function iconsize(count) {
     if (i>10) {
         i = 10;
     }
-    return e+Math.pow(2,i);
+    return e+Math.pow(2,i);*/
+    return 12;
 }
 
 function pct(n,t) {
@@ -129,7 +130,6 @@ function display() {
         var data = [];
         var datax = [];
         var datay = [];
-        var sevenday;
 
         $.each(response, function(i) {
             data.push({
@@ -153,9 +153,7 @@ function display() {
             datax.push(data[i]["date"]);
             datay.push(fixvalue(data[i][$("#measure").val()]));        
         });
-        
 
-        var plottype = "scatter";
         var plot = document.getElementById('display');
         var plotdata = [];
 
