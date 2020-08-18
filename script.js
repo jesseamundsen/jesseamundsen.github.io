@@ -11,7 +11,7 @@ function init() {
         windowsize();
     });
 
-    $.getJSON("https://covidtracking.com/api/v1/states/current.json", function(response) {
+    $.getJSON("https://api.covidtracking.com/v1/states/current.json", function(response) {
         $.each(statedata, function(i) {
             var currcount = response.find(x => x.state === statedata[i]["state"])["positive"];
             var iconsz = iconsize(currcount);
@@ -119,10 +119,10 @@ function display() {
     var uri;
 
     if (state == "US") {
-        uri = "https://covidtracking.com/api/v1/us/daily.json";
+        uri = "https://api.covidtracking.com/v1/us/daily.json";
     }
     else {
-        uri = "https://covidtracking.com/api/v1/states/" + state.toLowerCase()  +"/daily.json";
+        uri = "https://api.covidtracking.com/v1/states/" + state.toLowerCase()  +"/daily.json";
     }
 
     $.getJSON(uri, function(response) {
