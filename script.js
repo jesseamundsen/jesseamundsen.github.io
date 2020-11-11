@@ -13,31 +13,33 @@ function init() {
 
     $.getJSON("https://api.covidtracking.com/v1/states/current.json", function(response) {
         $.each(statedata, function(i) {
-            var currcount = response.find(x => x.state === statedata[i]["state"])["positive"];
-            var iconsz = iconsize(currcount);
-            L.marker([statedata[i]["latitude"], statedata[i]["longitude"]], {icon: 
-                L.icon({
-                    iconUrl: 'circle.svg',
-                    iconSize: [iconsz, iconsz]
-                })
-            }).on('click', function(e) {
-                state = statedata[i]["state"];
-                display();
-            }).addTo(map);
-            currdata = response.find(x => x.state === statedata[i]["state"]);
-            $("#table tbody").append(
-                 '<tr onclick="tableclick(\''+statedata[i]["state"]+'\')">'
-                +'<td>0</td>'
-                +'<td>'+statedata[i]["state"]+'</td>'
-                +'<td>'+statedata[i]["pop"]+'</td>'
-                +'<td>'+currdata["positive"]+'</td>'
-                +'<td>'+currdata["totalTestResults"]+'</td>'
-                +'<td>'+currdata["death"]+'</td>'
-                +'<td>'+(currdata["positive"]/statedata[i]["pop"])*1000+'</td>'
-                +'<td>'+(currdata["totalTestResults"]/statedata[i]["pop"])*1000+'</td>'
-                +'<td>'+(currdata["death"]/statedata[i]["pop"])*1000+'</td>'
-                +'</tr>'
-            );
+            if (statedata[i]["state"]!="US") {
+                var currcount = response.find(x => x.state === statedata[i]["state"])["positive"];
+                var iconsz = iconsize(currcount);
+                L.marker([statedata[i]["latitude"], statedata[i]["longitude"]], {icon: 
+                    L.icon({
+                        iconUrl: 'circle.svg',
+                        iconSize: [iconsz, iconsz]
+                    })
+                }).on('click', function(e) {
+                    state = statedata[i]["state"];
+                    display();
+                }).addTo(map);
+                currdata = response.find(x => x.state === statedata[i]["state"]);
+                $("#table tbody").append(
+                     '<tr onclick="tableclick(\''+statedata[i]["state"]+'\')">'
+                    +'<td>0</td>'
+                    +'<td>'+statedata[i]["state"]+'</td>'
+                    +'<td>'+statedata[i]["pop"]+'</td>'
+                    +'<td>'+currdata["positive"]+'</td>'
+                    +'<td>'+currdata["totalTestResults"]+'</td>'
+                    +'<td>'+currdata["death"]+'</td>'
+                    +'<td>'+(currdata["positive"]/statedata[i]["pop"])*1000+'</td>'
+                    +'<td>'+(currdata["totalTestResults"]/statedata[i]["pop"])*1000+'</td>'
+                    +'<td>'+(currdata["death"]/statedata[i]["pop"])*1000+'</td>'
+                    +'</tr>'
+                );
+            }
         });
 
         dt = $('#table').DataTable({
@@ -141,6 +143,7 @@ function display() {
                 ,"newtests": response[i]["totalTestResultsIncrease"]
                 ,"newdeaths": response[i]["deathIncrease"]
                 ,"newpctpositive": pct(response[i]["positiveIncrease"], response[i]["totalTestResultsIncrease"])
+                ,"newcasesperthousand": (response[i]["positiveIncrease"]/statedata.find(x => x.state === state)["pop"])*100000.0
             });
         });
 
