@@ -11,7 +11,30 @@ function init() {
         windowsize();
     });
 
-    $.getJSON("https://api.covidtracking.com/v1/states/current.json", function(response) {
+    $.each(statedata, function(i) { 
+        var iconsz = iconsize(0);
+                L.marker([statedata[i]["latitude"], statedata[i]["longitude"]], {icon: 
+                    L.icon({
+                        iconUrl: 'circle.svg',
+                        iconSize: [iconsz, iconsz]
+                    })
+                }).on('click', function(e) {
+                    state = statedata[i]["state"];
+                    display();
+                }).addTo(map);
+    });
+
+    windowsize();
+
+    $('#tablewrapper').show();
+
+    display();
+
+    $("#measure").change(function() {display();});
+    $("#axistype").change(function() {display();});
+    $("#days").change(function() {display();});
+
+    /*$.getJSON("https://api.covidtracking.com/v1/states/current.json", function(response) {
         $.each(statedata, function(i) {
             if (statedata[i]["state"]!="US") {
                 var currcount = response.find(x => x.state === statedata[i]["state"])["positive"];
@@ -75,7 +98,7 @@ function init() {
         $("#axistype").change(function() {display();});
         $("#days").change(function() {display();});
 
-    });
+    });*/
 
 }
 
@@ -118,36 +141,28 @@ function display() {
 
     $("#currentstate").html(state);
 
-    var uri;
+    var uri = "https://api.covidactnow.org/v2/state/"+state.toUpperCase()+".timeseries.json?apiKey=1d11165a0ab845768de95300f6cdc7ba";
 
-    if (state == "US") {
-        uri = "https://api.covidtracking.com/v1/us/daily.json";
-    }
-    else {
-        uri = "https://api.covidtracking.com/v1/states/" + state.toLowerCase()  +"/daily.json";
-    }
-
-    $.getJSON(uri, function(response) {
+    $.getJSON(uri, function(r) {
 
         var data = [];
         var datax = [];
         var datay = [];
+        var response;
 
-        $.each(response, function(i) {
-            data.push({
-                "date": response[i]["date"].toString().slice(0,4)+"-"+response[i]["date"].toString().slice(4,6)+"-"+response[i]["date"].toString().slice(6,8)
-                ,"allcases": response[i]["positive"]
-                ,"alltests": response[i]["totalTestResults"]
-                ,"alldeaths": response[i]["death"]
-                ,"newcases": response[i]["positiveIncrease"]
-                ,"newtests": response[i]["totalTestResultsIncrease"]
-                ,"newdeaths": response[i]["deathIncrease"]
-                ,"newpctpositive": pct(response[i]["positiveIncrease"], response[i]["totalTestResultsIncrease"])
-                ,"newcasesperthousand": (response[i]["positiveIncrease"]/statedata.find(x => x.state === state)["pop"])*100000.0
-            });
+        $.each(r["actualsTimeseries"], function(i) {
+            response = r["actualsTimeseries"];
+            if (response[i]["newCases"] != null)
+            {
+                data.push({
+                    "date": response[i]["date"]
+                    ,"allcases": response[i]["cases"]
+                    ,"alldeaths": response[i]["deaths"]
+                    ,"newcases": response[i]["newCases"]
+                    ,"newdeaths": response[i]["newDeaths"]
+                });
+            }
         });
-
-        data = data.reverse();
 
         if (data.length > $('#days').val()) {
             data = data.slice(data.length - $('#days').val());
