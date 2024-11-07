@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+              Posts
+            
+          - Trishock.com
+        </title>
+    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="../tinysite.css" />
+  </head>
+  <body>
+    <div id="top">
+      <h1>Trishock</h1>
+    </div>
+    <div id="middle">
+      <div id="nav">
+        <ul>
+          <li>
+            <a href="http://www.trishock.com/posts&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Posts
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/categories&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Categories
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/academic&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Academic
+						</a>
+          </li>
+        </ul>
+      </div>
+      <div id="content">
+        <div style="text-align:center;margin-bottom:20px;">
+          <script async="" src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">//na</script>
+          <ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px" data-ad-client="ca-pub-1877423766388302" data-ad-slot="0892719297"> </ins>
+          <script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+        </div>
+        <h2>Posts</h2>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">XBMC + VDPAU = Amazing</h3>
+            <br />
+            <span class="category">
+            [Category: <a href="../category/1.html">Linux</a>]
+          </span>
+            <span class="permalink">
+            [<a href="../post/1.html">link</a>]
+          </span>
+            <span class="logdate">
+            [Date: 2010-01-30 20:51:46]
+          </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>  Over the past few weekends I have worked to get our aging HTPC back into action. The only monetary investment that was made was a $40 video card. After purchasing a new <a href="http://www.nvidia.com/object/product_geforce_210_us.html">Geforce 210</a> to replace a 7100GS and moving over some memory from a now defunct workstation, the new machine was a little more formidable:  </p>
+            <ul>
+              <li>AMD Sempron 2800+ (1.6GHz, S754)</li>
+              <li>Nvidia GeForce 210</li>
+              <li>2GB (2x1GB) DDR2-800</li>
+            </ul>
+            <p>  It's connected to a 32" Sony Bravia through a D-SUB cable since it appears that the HDMI pass-through on the Geforce 210's is not properly working yet in Linux. All of the hardware resides in an old <a href="http://www.nmediapc.com/htpc100.htm">nmediapc case</a> that's now discontinued.  </p>
+            <img src="../talkyimg/htpc.jpg" alt="HTPC" />
+            <p>  I purchased the Geforce 210 for a specific reason: <a href="http://en.wikipedia.org/wiki/VDPAU">VDPAU</a>. VDPAU allows for the offloading of intensive calculations associated with playing videos and has grown to be quite encompassing over the past year. I was keen to see if VDPAU was as effective as some benchmarks had indicated and I thought that testing it with a painfully aged budget processor would reveal just how useful VDPAU is.  </p>
+            <p>  Setting up VDPAU wasn't difficult thanks to the <a href="https://launchpad.net/~nvidia-vdpau/+archive/ppa">VDPAU team PPA</a>. I formatted the HTPC and installed Ubuntu 9.10, downloaded the required drivers using the PPA and installed the builds of Mplayer and SMplayer. VDPAU worked without many quarrels and preliminary tests showed the processor never breaching 10% with 720p x264 encoded files. These results were very impressive, but I would later find even more staggering results. One issue that had to be dealt with was some vicious tearing. To remove this, you must setup your xorg.conf to disable the composite extension entirely. The easiest way to do this is:  </p>
+            <pre>  sudo nvidia-xconfig --no-composite  </pre>
+            <p>  After disabling the composite extension and restarting the X server the tearing was gone. Now, at the time, I felt very content with myself. I had spent $40 to upgrade a nearly four year old HTPC and managed to coax it into playing extremely high bitrate and processing intensive HD x264 files. The extra memory helped improve the boot time tremendously. I thought that I was done until this accessory showed up courtesy of my father (apparently they have over half a dozen of them lying around where he works):  </p>
+            <img src="../talkyimg/mceusb.jpg" alt="MCE USB Remote" />
+            <p>  This led me to battle the beast known as <a href="http://www.lirc.org/">LIRC</a> which provides for the use of IR devices (in my case the receiver and the remote). The documentation for LIRC and the available resources appear very esoteric and somewhere between confusing and misleading. I ended up finding the best resource (albeit a very out of date one) on the <a href="http://www.mythtv.org/wiki/Ubuntu_lirc_install">MythTV Wiki</a>). Microsoft IR remotes (my model is TSGH-IR01) are very well supported through LIRC and it was easy enough to follow the directions on the wiki page to get the operating system to recognize key presses. I then used a package to generate the key mapping files:  </p>
+            <pre>  sudo apt-get install mythbuntu-lirc-generator  mythbuntu-lirc-generator  </pre>
+            <p>  This got me some basic functionality in VLC and MPlayer. At this point, I began to fantasize of removing the need to use the wireless keyboard and using my fancy IR remote instead. After finding that newer builds of XBMC support VDPAU, I decided to take the plunge and spend the day installing and configuring XBMC. I got the builds from the <a href="https://launchpad.net/~team-xbmc/+archive/ppa">Team XBMC PPA</a>. XBMC worked nearly flawlessly and interfaced with the MCE remote very well. I begin to feel like it may be possible to operate the machine entirely without a keyboard, but there were quite a few hurdles in the way.  </p>
+            <p>  First, I had to add a new xsession config for XBMC (make sure it's with the --standalone option or else it cannot automount USB devices) and enable auto login. This made for a very speedy boot process that dropped the user directly in XBMC where they could easily use the remote to navigate and control playback. Second, there is a very visually displeasing bug with the new xsplash system in 9.10 that causes an Ubuntu loading box to appear and remain over the XBMC interface for what feels like an eternity. To fix this issue:  </p>
+            <pre>  if [ -x '/usr/bin/xsplash' ];  then  /usr/bin/xsplash --gdm-session --daemon  fi  </pre>
+            <p>  Must be removed or commented out from both /etc/gdm/Init/Default and /etc/gdm/PreSession/Default. Thanks to Freek on the XBMC forums for posting this <a href="http://xbmc.org/forum/showthread.php?t=60422">solution</a>.  </p>
+            <p>  The two other primary issues involve DVD playback and the mounting of large USB hard disks. The DVD drive issue is ongoing and I believe that the IDE channel on the motherboard may be dying. After trying three PATA DVD drives and each of them exhibiting issues with playback, I think it may be time to spend $20 on a SATA optical drive. The most difficult problem to solve involved the automatic mounting of USB hard disks. Smaller USB flash drives work fine, but large USB hard disks did not automatically mount in XBMC. After toiling for an hour, I found that a <a href="http://xbmc.org/forum/showthread.php?t=68174">script</a> written by andyblac on the XBMC forums has the ability to which fix this issue. Some disks still appear to not work correctly, though. Mileage may vary, I suppose.  </p>
+            <p>  At this point I was feeling pretty content with myself. Clearly, I had breathed new life into this aging HTPC with minimal monetary investment. I added a special XBMC usplash to complete the look and configured a lot of the internal XBMC options to round out the rough edges. The interface and the remote work amazingly well together. As a final test, I decided to use what's known as the "Killa Sample" (<a href="http://tracker.hatters.org.uk/torrents/killa.sampla.x264.mkv.torrent">torrent</a>, <a href="http://rapidshare.com/files/82525583/killa.sampla.x264.mkv.html">rapidshare</a>) which is an amazing scene from <a href="http://en.wikipedia.org/wiki/Planet_Earth_(TV_series)">Planet Earth</a>. This sample clocks in at an average of 33.1Mbps @ full 1080p and brought my workstation to its knees (it rendered grey and green blocks) using normal xVideo video output with an Intel C2D E6750 (2.66GHz). Much to my amazement, the 1.6GHz Sempron and GeForce 210 with VDPAU handled the file with no issues. We watched stunned as the file played smoothly.  </p>
+            <object width="425" height="344">
+              <param name="movie" value="http://www.youtube.com/v/qKrvJeXrIAU" />
+              <param name="allowFullScreen" value="true" />
+              <param name="allowscriptaccess" value="always" />
+              <embed src="http://www.youtube.com/v/qKrvJeXrIAU" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344" />
+            </object>
+            <p>  In conclusion, VDPAU lives up to and beyond the hype it receives. For an HTPC, XBMC is a very user-friendly option that required some minimal tweaking. For an HTPC that has no tuner card I think XBMC is the clear choice over MythTV.  </p>
+          </div>
+        </div>
+        <span class="pagenav">
+          <a href="9.html">&lt; Newer Posts
+        </a>
+         | 
+      <a href="10.html">10</a>
+        </span>
+      </div>
+    </div>
+    <div id="bottom" />
+    <script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			  ga('create', 'UA-3548414-2', 'auto');
+			  ga('send', 'pageview');
+		  </script>
+  </body>
+</html>

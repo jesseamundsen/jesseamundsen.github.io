@@ -1,0 +1,132 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Using a recursive CTE to traverse a simple directed graph
+          - Trishock.com
+        </title>
+    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="../tinysite.css" />
+  </head>
+  <body>
+    <div id="top">
+      <h1>Trishock</h1>
+    </div>
+    <div id="middle">
+      <div id="nav">
+        <ul>
+          <li>
+            <a href="http://www.trishock.com/posts&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Posts
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/categories&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Categories
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/academic&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Academic
+						</a>
+          </li>
+        </ul>
+      </div>
+      <div id="content">
+        <div style="text-align:center;margin-bottom:20px;">
+          <script async="" src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">//na</script>
+          <ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px" data-ad-client="ca-pub-1877423766388302" data-ad-slot="0892719297"> </ins>
+          <script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+        </div>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">Using a recursive CTE to traverse a simple directed graph</h3>
+            <br />
+            <span class="category">
+          [Category: <a href="../category/9.html">Programming and Databases</a>]
+        </span>
+            <span class="permalink">
+          [<a href="20.html">link</a>]
+        </span>
+            <span class="logdate">
+          [Date: 2013-07-26 18:28:53]
+        </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>Many modern databases support the use of Common Table Expressions (CTE). Numerous times these have saved me the effort of writing code outside of the database when attempting to do basic routing, tree walking, or graph traversal. I, personally, find the CTE syntax somewhat difficult to follow. There are numerous examples online already showing CTE usage, but I thought I would throw my hat into the ring with basic example showing an interaction with a simple directed graph in PostgreSQL.</p>
+            <p>Suppose there is a directed graph, like the one seen below, and we want to walk the path from the node with id=3 to the node where id=0. The representation of the simple directed graph as a table gives us each id and a parentid.</p>
+            <div class="imgcaption">
+              <img src="../talkyimg/cte-graph.png" />
+A simple directed graph
+</div>
+            <p>We write a CTE like below</p>
+            <pre>
+-- create data
+drop table if exists relations;
+create temp table relations (id int4, parentid int4);
+insert into relations
+(id,parentid)
+values (0,-1),
+       (1,0),
+       (2,1),
+       (3,2),
+       (4,2),
+       (5,0);
+       
+-- walk graph
+with recursive link(id,parentid) as
+(
+     select id,parentid
+     from relations
+     where id=3
+     union all
+     select r.id,r.parentid
+     from relations r, link l
+     where l.parentid=r.id and r.parentid not in (-1)
+)
+select id,parentid
+from link;
+</pre>
+            <p>When the above code sample is run, it returns</p>
+            <pre>
+id   parentid
+3    2
+2    1
+1    0
+</pre>
+            <p>So how does this wizardry work? Notice the <i>union all</i> statement within the recursive statement. The part before the <i>union all</i> is the "anchor". This defines the starting point for the CTE. Think of it like the first record (we start at id=3 with parentid=2). If this query returns more than one record, each record will be evaluated recursively, and it may be necessary to include another field to be able to separate the resulting records. The lower query is where the magic happens. The statement should call <i>itself</i> again.</p>
+            <p>To invoke the recursion, simply call the recursive statement. This is what the last select statement does. In this case "link" is the name of the recursive statement. Make sure that the recursive statement eventually returns no records, or else it will run forever. If you have a non-directed graph with loops, you will need to store visited locations to avoid such problems.</p>
+          </div>
+          <div id="disqus_thread" />
+          <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'trishock'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+      </script>
+          <noscript>
+        Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+          </noscript>
+          <a href="http://disqus.com" class="dsq-brlink">
+        comments powered by <span class="logo-disqus">Disqus</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="bottom" />
+    <script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			  ga('create', 'UA-3548414-2', 'auto');
+			  ga('send', 'pageview');
+		  </script>
+  </body>
+</html>

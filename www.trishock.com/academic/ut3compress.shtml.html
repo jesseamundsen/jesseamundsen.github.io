@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>UT3Compress</title>
+    <link type="text/css" rel="stylesheet" href="css/mountain.css" title="Mountain Vista" media="screen" />
+    <link type="text/css" rel="alternate stylesheet" href="css/earth.css" title="Earth Green" media="screen" />
+    <link type="text/css" rel="alternate stylesheet" href="css/desert.css" title="Desert Sunset" media="screen" />
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-3548414-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+</head>
+
+<body>
+<div id="page">
+    <div id="header">
+        <div>
+          <h1><a class="hlink" href="index.shtml.html">Jesse Amundsen</a></h1>
+        </div>
+        <div id="navcontainer" class="link">
+            <ul id="navlist">
+                <li><a href="index.shtml.html#information">Information</a></li>
+                <li><a href="index.shtml.html#coursework">Coursework</a></li>
+                <li><a href="index.shtml.html#contentx">Content</a></li>
+				<li><a href="index.shtml.html#albums">Albums</a></li>
+                <li><a href="index.shtml.html#resources">Resources</a></li>
+            </ul>
+        </div>
+
+        <hr />
+    </div>
+    <div id="content">
+        
+        <!--UT3Compress-->
+        <div class="item">
+            <div class="itemheader">
+                <h2>UT3Compress</h2><h5>Simple Compression Assistant</h5>
+            </div>
+            <div class="itembody">
+               <ol class="list">
+                   <li><a href="ut3compress.shtml.html#introduction">Introduction</a></li>
+                   <li><a href="ut3compress.shtml.html#advantages">Advantages of UT3Compress</a></li>
+                   <li><a href="ut3compress.shtml.html#download">Download program or source code</a></li>
+               </ol>
+               <h4><a id="introduction">Introduction</a></h4>
+               <div class="divider"></div>
+               
+                   <p class="first">
+                   Designed to make the process of compressing Unreal Tournament 3 gamefiles easier, UT3Compress
+                   allows users to access the compress commandlet in UT3 by way of a simple GUI that includes
+                   a few extra features such as skipping files if they exist already. Effectively, this allows
+                   users to "synchronize" a redirect directory with a gamefiles directory.
+                   </p>
+               
+                   <p>
+                    Taken from the readme file:
+                    UT3Compress is a painfully simple application that lets users who have patched their
+                    game to support the compress command easily compress files. It creates compressed
+                    files that are .uz3 format. It was written in .NET/C#.
+                   </p>
+               
+               <h4><a id="advantages">Advantages of UT3Compress</a></h4>
+               <div class="divider"></div>
+               
+                   <a href="images/ut3compress.png"><img style="float: right; margin: 4px 0 4px 8px; border: solid 0px #000" alt="UT3Compress" src="images/ut3compress-preview.png" /></a>
+               
+                   <p class="first">
+                   Using UT3Compress rather than a batch file has a few key advantages:
+                   </p>
+                   <ul style="list-style-type: circle">
+                   <li>Suppression of commandlet windows to prevent clutter</li>
+                   <li>Automation of compressing multiple files at once (scales)</li>
+                   <li>Files that exist can be skipped, allowing a user to "synchronize" two directories</li>
+                   <li>UT3Compress can be easily run in Win2003 Server with RDP access</li>
+                   <li>Simplistic GUI makes it easy for novice users unfamiliar with cmd syntax</li>
+                   </ul>
+                   
+               <h4><a id="download">Download program or source code</a></h4>
+               <div class="divider"></div>
+               
+                   <p class="first link">
+                   To run this program you need the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=0856EACB-4362-4B0D-8EDD-AAB15C5E04F5&displaylang=en">Microsoft .NET Framework 2.0</a>,
+                   an install of Unreal Tournament 3 and a patched UT3.exe so it supports the compress
+                   commandlet (patch 1.2 and greater). As of version 1.1 I don't intend to support this program
+                   any longer and will only update it for extreme bugs. For this reason, you can find the source
+                   of the program below. If you choose to continue work on this program and use some of my code,
+                   all I ask is that give proper attribution to my code.
+                   </p>
+                   
+                   <p class="link">
+                   There are a few known issues with the UT3 compress commandlet and thus with this program.
+                   Most of the game assets have to be loaded prior to executing the compress commandlet.
+                   This means that over 200mb+ of gamefiles will be loaded into memory prior to the compression
+                   of files. In the first release of this program (v1.0) it did this for each file individually,
+                   now it only does it once and passes each file as an argument reducing compression time
+                   dramatically. Also, using the UT3.com instead of the raw UT3.exe is highly reccomended, but
+                   not too important in v1.1 of this program since background windows are suppressed.
+                   <br /><br />
+                   <a href="zip/UT3Compress.zip">Download UT3Compress.zip</a> (Win x86)
+                   <br />
+                   <a href="zip/UT3Compress-Source.zip">Download UT3Compress-Source.zip</a> (C#)
+                   </p>
+               
+            </div>
+        </div>
+        
+    </div>
+    <div id="footer">
+        <hr class="invis" />
+        <h6>Jesse Amundsen | amundsenj1 at nku dot edu</h6>
+<div style="margin: 15px">
+	<script type="text/javascript"><!--
+	google_ad_client = "pub-1877423766388302";
+	/* academic bottom */
+	google_ad_slot = "0892719297";
+	google_ad_width = 468;
+	google_ad_height = 60;
+	//-->
+	</script>
+	<script type="text/javascript"
+	src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
+</div>
+<style type="text/css">
+.badge {
+background-image: url(images/badge_color_blacktext_25.png);
+width:96px;
+height:64px;
+margin: 2em auto;
+}
+.badge:hover {
+background-image: url(images/badge_color_blacktext.png);
+}
+.badge a {
+display:block;
+width:96px;
+height:64px;
+}
+.badge a {
+background-image: url(images/badge_color_blacktext_25.png);
+display:block;
+width:96px;
+height:64px;
+}
+.badge a:hover {
+background-image: url(images/badge_color_blacktext.png);
+}
+</style>
+<div class="badge"><a href="http://www.ubuntu.com/"></a></div>
+
+
+    </div>
+</div>
+</body>
+</html>

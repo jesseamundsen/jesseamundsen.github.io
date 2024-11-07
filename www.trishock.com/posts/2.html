@@ -1,0 +1,330 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+              Posts
+            
+          - Trishock.com
+        </title>
+    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="../tinysite.css" />
+  </head>
+  <body>
+    <div id="top">
+      <h1>Trishock</h1>
+    </div>
+    <div id="middle">
+      <div id="nav">
+        <ul>
+          <li>
+            <a href="http://www.trishock.com/posts&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Posts
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/categories&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Categories
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/academic&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Academic
+						</a>
+          </li>
+        </ul>
+      </div>
+      <div id="content">
+        <div style="text-align:center;margin-bottom:20px;">
+          <script async="" src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">//na</script>
+          <ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px" data-ad-client="ca-pub-1877423766388302" data-ad-slot="0892719297"> </ins>
+          <script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+        </div>
+        <h2>Posts</h2>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">Ray casting algorithm in Python</h3>
+            <br />
+            <span class="category">
+            [Category: <a href="../category/9.html">Programming and Databases</a>]
+          </span>
+            <span class="permalink">
+            [<a href="../post/25.html">link</a>]
+          </span>
+            <span class="logdate">
+            [Date: 2013-12-15 02:12:45]
+          </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>
+It’s one of the simplest and most repeated operations in computational geometry: does a point fall within a polygon? Examples of this include assigning a point location to a state or county, potentially for filtering or to then gather information about the area the location falls within. A popular and simple method for solving this problem is the Ray Casting Algorithm which works by counting the number of intersections between a test line that contains the point in question and each edge of the polygon. If the number of intersections to the left of the test line and to the right of the test line are both odd, the point falls within the polygon.
+</p>
+            <div class="imgcaption">
+              <img src="../talkyimg/pip.gif" />
+Various polygons (Source: Oracle ThinkQuest)
+</div>
+            <p>
+As an exercise, I developed a solution to the point in polygon problem in Python. Most complicated is the test for two segments intersecting one another. I still barely understand the mathematics behind it, but the method I chose to <strike>use</strike> copy is done using vector cross products. See a thread on StackOverflow <a href="http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect">here</a> for a detailed explanation of the methodology.
+</p>
+            <p>
+There are many special cases relating to where the point falls (exactly on an edge, exactly on the start or end point of an edge), how the test line is drawn (edge overlaps the test line), and the type of polygon (multi, self-intersecting). While the implementation I cobbled together below isn’t exhaustive, it’s functional for most cases.
+</p>
+            <pre>
+def main():
+    poly = Polygon()
+    poly.AddPoint(Point(0,0))
+    poly.AddPoint(Point(2,0))
+    poly.AddPoint(Point(2,2))
+    poly.AddPoint(Point(0,2))
+    print(PointInPolygon(poly, Point(3,1)))
+    print(PointInPolygon(poly, Point(1,1)))
+
+def PointInPolygon(polygon, point):
+    testline_left = Segment(Point(-999999999,point.y), point)
+    testline_right = Segment(point, Point(-999999999,point.y))
+    count_left = 0
+    count_right = 0
+    for e in polygon.GetEdges():
+        if EdgesIntersect(testline_left, e):
+            count_left += 1
+        if EdgesIntersect(testline_right, e):
+            count_right += 1
+    if count_left % 2 == 0 and count_right % 2 == 0:
+        return False
+    else:
+        return True
+
+def EdgesIntersect(e1, e2):
+
+    a = e1.p1
+    b = e1.p2
+    c = e2.p1
+    d = e2.p2
+
+    cmp = Point(c.x - a.x, c.y - a.y)
+    r = Point(b.x - a.x, b.y - a.y)
+    s = Point(d.x - c.x, d.y - c.y)
+
+    cmpxr = cmp.x * r.y - cmp.y * r.x
+    cmpxs = cmp.x * s.y - cmp.y * s.x
+    rxs = r.x * s.y - r.y * s.x
+
+    if cmpxr == 0:
+        return (c.x - a.x &lt; 0) != (c.x - b.x &lt; 0)
+    if rxs == 0:
+        return False
+
+    rxsr = 1 / rxs
+    t = cmpxs * rxsr
+    u = cmpxr * rxsr
+
+    return t &gt;= 0 and t &lt;= 1 and u &gt;= 0 and u &lt;= 1
+
+class Point:
+    x = None
+    y = None
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+class Segment:
+    p1 = None
+    p2 = None
+    def __init__(self, p1, p2):
+        self.p1 = p1
+        self.p2 = p2
+
+class Polygon:
+    points = None
+    def __init__(self):
+        self.points = []
+    def AddPoint(self, p):
+        self.points.append(p)
+    def GetEdges(self):
+        edges = []
+        for i in range(len(self.points)):
+            if i == len(self.points) - 1:
+                i2 = 0
+            else:
+                i2 = i + 1
+            edges.append(Segment(self.points[i], self.points[i2]))
+        return edges
+
+if __name__ == '__main__':
+    main()
+</pre>
+            <p>
+The output of this Python script is seen below.
+</p>
+            <pre>
+False
+True
+</pre>
+            <p>
+For further reading, see:
+<br />
+              <ul>
+                <li>
+                  <a href="http://alienryderflex.com/polygon/">http://alienryderflex.com/polygon/</a>
+                </li>
+                <li>
+                  <a href="http://en.wikipedia.org/wiki/Point_in_polygon">http://en.wikipedia.org/wiki/Point_in_polygon</a>
+                </li>
+              </ul>
+            </p>
+          </div>
+        </div>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">The Palindromic Odometer</h3>
+            <br />
+            <span class="category">
+            [Category: <a href="../category/9.html">Programming and Databases</a>]
+          </span>
+            <span class="permalink">
+            [<a href="../post/24.html">link</a>]
+          </span>
+            <span class="logdate">
+            [Date: 2013-11-23 01:20:27]
+          </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>
+    I forget exactly how I came across this puzzler. It has been solved by deductive reasoning, brute force, and in a variety of programming languages. I felt compelled to develop my own solution in Python. The problem is as follows (taken from the <a href="http://www.cartalk.com/content/palindromic-odometer">Car Talk website</a>).
+</p>
+            <div class="imgcaption">
+              <img src="../talkyimg/odometer.jpg" />Not a palindrome</div>
+            <p>
+              <i>"I noticed that the last 4 digits were palindromic. I drove a mile, and the last 5 were palindromic. I drove another mile and the middle 4 were palindromic, and the ends were not involved. And then one mile later, all 6 digits were palindromic."</i>
+            </p>
+            <p>
+    First, I wondered if leading zeroes on the odometer counted as eligible digits for comparison. As it would turn out, it makes no difference. My solution incorporated this regardless. Another interesting bit is that there are <i>technically</i> two solutions that satisfy the conditions outlined by the author, though the second solution is much less elegant and for the first number in the sequence the first five digits are palindromic. After refreshing my memory regarding splice syntax in Python, I was on my way. Running the following code produces two results: 198,888 and 199,999.
+</p>
+            <pre>
+import math
+
+def ispalindrome(text):
+    plen = math.floor(len(text) / 2) + 1
+    if text[:plen-1] == text[:-plen:-1]:
+        return True
+    else:
+        return False
+
+for i in range(100000, 1000000):
+    reading = str(i).zfill(6)
+    if len(reading) == 6:
+        condition_1 = str(i).zfill(6)[2:]
+        condition_2 = str(i+1).zfill(6)[1:]
+        condition_3 = str(i+2).zfill(6)[1:5]
+        condition_4 = str(i+3).zfill(6)
+        if ispalindrome(condition_1) \
+        and ispalindrome(condition_2) \
+        and ispalindrome(condition_3) \
+        and ispalindrome(condition_4):
+            print("Odometer initially read: " + str(i))
+</pre>
+            <p>
+    For the more elegant answer of 198888, the sequence is 19<i>8888</i> -&gt; 1<i>98889</i> -&gt; 1<i>9889</i>0 -&gt; <i>198891</i>. The less elegant answer of 199999 yields a sequence of 19<i>9999</i> -&gt; 2<i>00000</i> -&gt; 2<i>0000</i>1 -&gt; <i>200002</i>. In all likelihood, the author was referencing the first solution of 198,888 or else he would have specified that the last five digits were palindromic to start the sequence. There is also a sense of "less palindromic" when dealing with numbers that are mostly identical to take into account.
+</p>
+          </div>
+        </div>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">Fibonnaci Pigeons!</h3>
+            <br />
+            <span class="category">
+            [Category: <a href="../category/9.html">Programming and Databases</a>]
+          </span>
+            <span class="permalink">
+            [<a href="../post/23.html">link</a>]
+          </span>
+            <span class="logdate">
+            [Date: 2013-09-27 01:22:35]
+          </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>
+    After watching a video by Numpherphile with Dr. James Grime illustrating an interesting relationship of Fibonacci numbers and their remainders known as a Pisano Period, I decided to explore a bit on my own and write a solver in Python.
+</p>
+            <p>
+              <div class="imgcaption">
+                <img src="../talkyimg/fibonacci_pigeons.jpg" />Do these Pigeons know the secret?</div>
+            </p>
+            <p>
+    In a Fibonacci series, the current number in the series is the sum of the previous two numbers. If a divisor is chosen, each number in the series is divided by the divisor, and the remainder is taken, interesting patterns emerge. For each divisor (ex: 3, 5, 7, 10, 11) a repeating pattern of varying length is found. For a divisor of 3, a pattern with length 8 repeats. For 7, a pattern of length 16. Each pattern always initiates with a 0 first followed by a 1.
+</p>
+            <p>
+    My implementation to illustrate these unique patterns is found below.
+</p>
+            <pre>
+def main():
+
+    fibonacci_length = 40
+    divisor = 11
+
+    series =  generateFibonnaci(fibonacci_length)
+    remainder = [num % divisor for num in series]
+    pattern = findPattern(remainder)
+    period = len(pattern)
+
+    print(series)
+    print(remainder)
+    print(pattern)
+    print(period)
+
+def generateFibonnaci(size):
+    result = [0,1]
+    for i in range(size - 2):
+        result.append(result[i]+result[i+1])
+    return result
+
+def findPattern(series):
+    length = 0
+    for i in range(2, int(len(series)/2)):
+        if series[0:i] == series[i:2*i] :
+            return series[0:i]
+    return []
+
+if __name__ == '__main__':
+    main()
+</pre>
+            <p>For the above example, the following is returned (series shortened):</p>
+            <pre>
+[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, ...]
+[0, 1, 1, 2, 3, 5, 8, 2, 10, 1, 0, 1, 1, 2, 3, 5, 8, 2, 10, 1, 0, 1, ...]
+[0, 1, 1, 2, 3, 5, 8, 2, 10, 1]
+10
+</pre>
+            <p>
+    For larger divisors, larger Fibonacci sequences may be necessary. Be careful if you decide to be ambitious - you can easily push your laptop into submission.
+</p>
+            <p>
+    So why is this amusing? No one has come up with a deterministic way to predict the length of the pattern (known as the Pisano Period). For more crazy relationships using Fibonacci numbers and the Pisano Periods watch the <a href="http://www.youtube.com/watch?v=Nu-lW-Ifyec">Numberphile video on YouTube</a> or read the <a href="http://en.wikipedia.org/wiki/Pisano_period">WikiPedia article on Pisano Periods</a>.
+</p>
+          </div>
+        </div>
+        <span class="pagenav">
+          <a href="1.html">&lt; Newer Posts
+        </a>
+         | 
+      <a href="2.html">2</a>
+         | 
+        <a href="3.html">Older Posts &gt;
+        </a>
+        </span>
+      </div>
+    </div>
+    <div id="bottom" />
+    <script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			  ga('create', 'UA-3548414-2', 'auto');
+			  ga('send', 'pageview');
+		  </script>
+  </body>
+</html>

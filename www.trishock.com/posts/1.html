@@ -1,0 +1,235 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>
+              Posts
+            
+          - Trishock.com
+        </title>
+    <link rel="shortcut icon" href="../images/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="../tinysite.css" />
+  </head>
+  <body>
+    <div id="top">
+      <h1>Trishock</h1>
+    </div>
+    <div id="middle">
+      <div id="nav">
+        <ul>
+          <li>
+            <a href="http://www.trishock.com/posts&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Posts
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/categories&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Categories
+						</a>
+          </li>
+          <li>
+            <a href="http://www.trishock.com/academic&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
+							Academic
+						</a>
+          </li>
+        </ul>
+      </div>
+      <div id="content">
+        <div style="text-align:center;margin-bottom:20px;">
+          <script async="" src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js">//na</script>
+          <ins class="adsbygoogle" style="display:inline-block;width:468px;height:60px" data-ad-client="ca-pub-1877423766388302" data-ad-slot="0892719297"> </ins>
+          <script>
+					(adsbygoogle = window.adsbygoogle || []).push({});
+				</script>
+        </div>
+        <h2>Posts</h2>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">Getting paid</h3>
+            <br />
+            <span class="category">
+            [Category: <a href="../category/10.html">Other</a>]
+          </span>
+            <span class="permalink">
+            [<a href="../post/28.html">link</a>]
+          </span>
+            <span class="logdate">
+            [Date: 2016-06-15 13:21:41]
+          </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>
+Over a decade ago I joined Google Adsense with a grand vision of capitalizing on the traffic to my various sites. Before that, there were other providers that promised to turn traffic into cash, but my level of success had always fallen short of the pictures painted by the advertisement providers. Google requires a minimum balance of $100 USD before paying out, and in over ten years I never, ever got close to it. As it turns out, the only real way to convert traffic into money is to have other-worldly amounts of visitors and clicks.
+</p>
+            <p>
+Fast forward to half a year ago when I received a notice from Google describing that my Adsense earnings had been sent to the government for “safe keeping” (insert skepticism here). This is called <a href="https://www.sec.gov/answers/escheat.htm">escheatment</a>. Evidently Google considered my account inactive under the claim that I had not accessed it in quite some time. That may be true, but they could have easily inquired as to whether I was still using the account (I was). After convincing myself that the ensuing fight would be worth the payout, I decided to attempt to get my ten years of earnings back.
+</p>
+            <p>
+Another month went by before I found my earnings listed as unclaimed property. As with so many things in the United States, each state opts to handle the process differently. Many states and jurisdictions contribute to the database at <a href="http://www.missingmoney.com">MissingMoney.com</a> and by searching this I found unclaimed property for both myself and multiple other family members.
+</p>
+            <p>
+I went through the process to reclaim my lost funds and began to wait. I waited so long I forgot about it. Then, while furiously sorting through a stack of mail after returning from a long trip I saw it - my lost funds had come. The journey was over four months after it began, and I held in my hand the earnings of over ten years of visits to my various sites. The total was $28.79, or about $3 a year. I probably shouldn’t quit my day job.
+</p>
+            <div class="imgcaption">
+              <img src="../talkyimg/check.jpg" />My spoils.
+</div>
+          </div>
+        </div>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">The 100 Prisoners Problem</h3>
+            <br />
+            <span class="category">
+            [Category: <a href="../category/9.html">Programming and Databases</a>]
+          </span>
+            <span class="permalink">
+            [<a href="../post/27.html">link</a>]
+          </span>
+            <span class="logdate">
+            [Date: 2014-12-17 03:11:11]
+          </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>
+Continuing my loose tradition of exploring novel problems in computing and mathematics, I felt the impetus to implement a quick simulation of the novel solution to the 100 prisoners problem. This time, the motivation came from a <a href="https://www.youtube.com/watch?v=eivGlBKlK6M">video from MinutePhysics</a>.
+</p>
+            <div class="imgcaption">
+              <img src="../talkyimg/prison.jpg" />
+A famous prison - <a href="http://en.wikipedia.org/wiki/Ch%C3%A2teau_d'If">Chateau D'if</a>
+            </div>
+            <p>
+For this problem, there are 100 prisoners and 100 boxes in two separate rooms. Each prisoner and box is numbered from one to 100. The boxes containing the numbers are randomly shuffled. Each prisoner is then given 50 attempts to find their own number. If every prisoner finds their own number, they are all set free. If even one prisoner fails to find their own number, all the prisoners perish. Prisoners that have entered the room with boxes and attempted to locate their own number are not allowed to communicate with prisoners who have yet to enter the room with boxes.
+</p>
+            <p>
+Surprisingly, there exists a solution to the prisoners' dilemma in which their chance of survival is 31.8%. This is significantly higher than if each prisoner randomly chose fifty boxes. In that case, each prisoner has a 50% chance of finding their number. For 100 prisoners, this would make the odds a terrible 0.5^100 or 0.0000000000000000000000000000008%. The solution is for each prisoner to start at their own box, then opening the next box indicated in the chain until their own number is found. By following the breadcrumbs or "chain" that the random shuffle created, the prisoners take advantage of the fact that the the boxes remain identical for each prisoner. Only when a chain is longer than fifty do the prisoners fail to find their number.
+</p>
+            <p>
+This is an elegantly simple solution that is surprisingly easy to implement. To satiate my own curiosity, I decided to write a pseudo-simulation that runs tests consecutively.
+</p>
+            <pre>
+import random
+
+simulation_count = 1000
+search_count = 50
+prisoner_count = 100
+
+simulation_results = [-1] * simulation_count
+simulation_passed = 0
+
+for i in range(simulation_count):
+
+    prisoners = range(prisoner_count)
+    boxes = list(prisoners)
+    random.shuffle(boxes)
+    results = [0] * prisoner_count
+
+    for prisoner in prisoners:
+        boxes_visited = 0
+        current_prisoner = prisoner
+        while boxes_visited &lt; search_count:
+            if boxes[current_prisoner] == prisoner:
+                results[prisoner] = 1
+                break
+            else:
+                current_prisoner = boxes[current_prisoner]
+            boxes_visited += 1
+
+    simulation_results[i] = float(sum(results))/float(prisoner_count)
+
+    if simulation_results[i] == 1.0:
+        simulation_passed += 1
+
+print "Success level: " + (
+    str(100*(float(simulation_passed) 
+    / 
+    float(simulation_count))) + "%")
+</pre>
+            <p>
+The results are as expected. Of the three simulations (each with 1000 tests) I ran, all were surprisingly close to the proven number of 31.8%.
+</p>
+            <pre>
+Success level: 33.0%
+Success level: 32.0%
+Success level: 32.1%
+</pre>
+            <p>
+While a one in three chance of survival seems paltry, it sure beats the infinitesimally small odds provided by each prisoner choosing fifty boxes randomly.
+</p>
+          </div>
+        </div>
+        <div class="weblog">
+          <div class="wb-header">
+            <h3 class="dc-title">Generating random locations along roads using PostGIS</h3>
+            <br />
+            <span class="category">
+            [Category: <a href="../category/9.html">Programming and Databases</a>]
+          </span>
+            <span class="permalink">
+            [<a href="../post/26.html">link</a>]
+          </span>
+            <span class="logdate">
+            [Date: 2013-12-16 01:32:41]
+          </span>
+          </div>
+          <hr />
+          <div class="dc-description">
+            <p>
+After my previous article pertaining to rolling accumulated totals using windowed functions (<a href="../post/22.html">link</a>), it dawned on me that this same technique could be used to generate random placements along a set of roads. In order to do this, each segment is defined as a start and end point of one continuous line - then a random location is chosen along this combined line. Thus, road segments that are longer are more likely to receive placements. The query could be re-written a number of ways to accommodate different needs such as equal-spaced points, no weighting based on segment length, or weighting based on some other variable.
+</p>
+            <p>
+Random locations along a line segment are commonly used as either representations of some form of demand, or as sample points for a study or survey. Perhaps random locations along creeks within a township need to be generated to take an unbiased sample of water quality, or locations are created within an area to represent buildings or people. In my demonstration below, I use 2010 Tiger Edges in Kenton County, KY provided by the Census Bureau and filter only to secondary roads (mtfcc='S1200') to limit my result set.
+</p>
+            <div class="imgcaption">
+              <img src="../talkyimg/rndpoints.png" />
+Randomly generated locations along secondary roads in Kenton County, KY
+</div>
+            <p>
+The picture above shows data generated using the query below.
+</p>
+            <pre>
+select ss.id
+  ,sr.tlid
+ ,st_line_interpolate_point(st_linemerge(sr.geom)
+    ,(ss.randlength-sr.startlength)/(sr.endlength-sr.startlength)) geom
+from (
+  select n.n id,random()*l.totallength randlength
+  from data.numbers n
+  cross join (select sum(st_length(geom)) totallength
+    from data.edges2010
+    where mtfcc='S1200') l
+  where n.n&lt;=100
+) ss
+join (
+  select tlid
+    ,geom
+    ,sum(st_length(geom)) over (partition by 1 order by tlid)-st_length(geom) 
+      startlength
+    ,sum(st_length(geom)) over (partition by 1 order by tlid) endlength
+  from data.edges2010
+  where mtfcc='S1200'
+) sr on ss.randlength between sr.startlength and sr.endlength
+</pre>
+            <p>
+There's quite a bit going on in the query above. The ss subquery uses a numbers table containing a single column counting from 1 to 1,000,000. Numbers tables are useful for <i>expanding</i> information in a query. In this case, the expansion is on the number of random locations to generate. PostgreSQL also has a <a href="http://www.postgresql.org/docs/9.1/static/functions-srf.html">generate_series()</a> function which can be used to achieve the same result. Within the sr subquery, the magic of windowed function support for aggregates is seen in the startlength and endlength fields. Finally, the linear referencing function st_line_interpolate_point() is used to locate the point along the segment in question.
+</p>
+          </div>
+        </div>
+        <span class="pagenav">
+          <a href="1.html">1</a>
+         | 
+        <a href="2.html">Older Posts &gt;
+        </a>
+        </span>
+      </div>
+    </div>
+    <div id="bottom" />
+    <script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			  ga('create', 'UA-3548414-2', 'auto');
+			  ga('send', 'pageview');
+		  </script>
+  </body>
+</html>

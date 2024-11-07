@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>MATLAB Functions</title>
+    <link type="text/css" rel="stylesheet" href="css/mountain.css" title="Mountain Vista" media="screen" />
+    <link type="text/css" rel="alternate stylesheet" href="css/earth.css" title="Earth Green" media="screen" />
+    <link type="text/css" rel="alternate stylesheet" href="css/desert.css" title="Desert Sunset" media="screen" />
+    <link rel="shortcut icon" href="images/favicon.png" />
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-3548414-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+</head>
+
+<body>
+<div id="page">
+    <div id="header">
+        <div>
+          <h1><a class="hlink" href="index.shtml.html">Jesse Amundsen</a></h1>
+        </div>
+        <div id="navcontainer" class="link">
+            <ul id="navlist">
+                <li><a href="index.shtml.html#information">Information</a></li>
+                <li><a href="index.shtml.html#coursework">Coursework</a></li>
+                <li><a href="index.shtml.html#contentx">Content</a></li>
+				<li><a href="index.shtml.html#albums">Albums</a></li>
+                <li><a href="index.shtml.html#resources">Resources</a></li>
+            </ul>
+        </div>
+
+        <hr />
+    </div>
+    <div id="content">
+        
+        <!--MATLAB-->
+        <div class="item">
+            <div class="itemheader">
+                <h2>MATLAB Functions</h2><h5>Various MATLAB functions available for public use</h5>
+            </div>
+            <div class="itembody">
+               <ol class="list">
+                   <li><a href="matlab.shtml.html#disclaimer">Before using...</a></li>
+                   <li><a href="matlab.shtml.html#failure">Mohr-Coulomb Failure Envelope Solver</a></li>
+                   <li><a href="matlab.shtml.html#boneplot">Boneplot: Bone Orientation Analysis</a></li>
+                   <li><a href="matlab.shtml.html#sacplot">Plot SAC Data for Analysis</a></li>
+                   <li><a href="matlab.shtml.html#bonus">Bonus Functions</a></li>
+               </ol>
+               <h4><a id="disclaimer">Before using...</a></h4>
+               <div class="divider"></div>
+               
+                   <p class="first">
+                   These are functions that I have either written, composed or altered in MATLAB. Some use other functions
+                   or pieces of other functions that others have written. Proper credit should be given in the M-file itself
+                   if this is the case. I make no promises toward the usability, efficiency, or accuracy of any of the
+                   following functions. Many still have obsolete comments and code in them and will require modification to meet your
+                   specific needs. They are all free to use and alter as long as attribution is properly given in the altered
+                   function. If there are questions or comments please email me at the address found on the main page of this site.
+                   </p>
+
+               <h4><a id="failure">Mohr-Coulomb Failure Envelope Solver</a></h4>
+               <div class="divider"></div>
+               
+                   <p class="first">
+                   There are three functions available for the Mohr-Coulomb failure envelope solver. The first function
+                   coulomb_approx() solves for the failure envelope for only two stress samples (two Mohr circles) and can act
+                   as a standalone function. The second function coulomb_series() will solve for a series of stress samples and
+                   relies on the coulomb_approx_values() function.
+                   </p>
+                   <a href="images/matlab-coulomb_series.png"><img style="float: left; margin: 4px 8px 4px 0; border: none" alt="coulomb_series()" src="images/matlab-coulomb_series-preview.png" /></a>
+                   <p class="link">
+                   The principle used behind the coulomb failure envelope solvers is that when an angle drawn from the centroid
+                   of each of two Mohr's circles is drawn with an identical value the y-intercept will be at it's peak where
+                   the most optimal angle is found. This can be illustrated by viewing the relationship of the derivative of the
+                   y-intercept with respect to theta. Using this knowledge it is possible to iteratively converge upon the most
+                   optimal y-intercept and slope value which then becomes the linear Mohr-Coulomb failure envelope. For datasets
+                   where there are more than two stress samples every combination of each two Mohr's circles can be solved for
+                   and the resulting averaged y-intercept and slope value can be used to find the best fit failure envelope.
+                   For more information on the Mohr-Coulomb failure envelope see my paper or poster available on the
+                   home page.
+                   <br /><br />
+                   <a href="matlab/coulomb_functions.zip">Download coulomb_functions.zip</a> (M-files)
+                   </p>
+
+               <h4><a id="boneplot">Boneplot: Bone Orientation Analysis</a></h4>
+               <div class="divider"></div>
+               
+                   <a href="images/matlab-boneplot.png"><img style="float: right; margin: 4px 0 4px 8px; border: none" alt="boneplot()" src="images/matlab-boneplot-preview.png" /></a>
+                   <p class="first">
+                   The boneplot() function provides a method to analyze the in situ orientation of bones, bone fragments and other
+                   fossilized fragments. It accepts E-N and Z data (x,y,z) along with the path to an image preview of the specimen.
+                   After plotting all of the relative locations the function performs a 3-dimensional regression using the fit_3d_data()
+                   function which I did not write. The regression works by minimizing orthogonal distances to either a plane or
+                   a line. The two methods differ slightly and will give minimally different answers for large datasets. I recommend 
+                   running both and taking an average.
+                   </p>
+                   <p class="link">
+                   Included in the download is the boneplot() function, 5 images used for demonstration
+                   purposes, and various datasets to use as examples or for testing purposes. There is also a compiled executable
+                   that will run on 32-bit Windows installations available. The MATLAB Component Runtime (v7.8) is required to
+                   run the executable. Datasets and images from the archive containing the M-files will be necessary in most situations.
+                   Other compiled versions can be made available for Linux or Windows upon request and a statement
+                   of intent that outlines what the program is intended to be used for.
+                   <br /><br />
+                   <a href="matlab/boneplot.zip">Download boneplot.zip</a> (M-files, images, datasets)
+                   <br />
+                   <a href="matlab/boneplot_win32.zip">Download boneplot_win32.zip</a> (x86 executable)
+                   </p>
+
+               <h4><a id="sacplot">Plot SAC Data for Analysis</a></h4>
+               <div class="divider"></div>
+               
+                   <a href="images/matlab-display_sac.png"><img style="float: left; margin: 4px 8px 4px 0; border: none" alt="coulomb_series()" src="images/matlab-display_sac-preview.png" /></a>
+                   <p class="first link">
+                   This function is simple but useful. There are two versions of it included. The display_sac() function will display
+                   a set of E-N and Z data at once and lock the zoom so inspection of the data becomes easier. The display_sac_single()
+                   function only analyzes one dimension of data but also performs a Fourier decomposition for further signal analysis.
+                   Writing your own variations on these functions should be easy. In the future a quick-stitcher is intended to allow
+                   for the concatenation of multiple consecutive datasets. Other future implementations may have more advanced
+                   digital signal processing options such as the ability to perform a bandpass time series. Eventually, this work is
+                   expected to provide the basis for choosing a site to place a seismometer in the Northern Kentucky area.
+                   <br /><br />
+                   <a href="matlab/plotsac.zip">Download plotsac.zip</a> (M-files)
+                   </p>
+
+               <h4><a id="bonus">Bonus Functions</a></h4>
+               <div class="divider"></div>
+               
+                   <p class="first">
+                   Below are other functions that either complement those above or are deemed not important enough to receive
+                   their own section. Some I did not write and are referenced since they are used by the functions above.
+                   </p>
+                   <p class="contentp link">
+                   <a href="matlab/fit_3D_data.m">fit_3D_data()</a> is used by boneplot to perform 3-dimensional regressions. I modified
+                   this function slightly. For the original, look <a href="http://www.mathworks.com/matlabcentral/fileexchange/12395">here</a>.
+                   </p>
+                   <p class="contentp link">
+                   <a href="matlab/coulomb.m">coulomb()</a> was the original coulomb failure envelope solver I wrote that explicitly solves
+                   for the failure envelope using differential calculus rather than iterative approximation. Very buggy and slow.
+                   </p>
+                   <p class="contentp link">
+                   <a href="matlab/intersections.m">intersections()</a> is a function I did not write that can be used by the coulomb() function
+                   above. You can also use the solve() function in the symbolic math toolbox so this function is not required.
+                   </p>
+              
+            </div>
+        </div>
+      
+    </div>
+    <div id="footer">
+        <hr class="invis" />
+        <h6>Jesse Amundsen | amundsenj1 at nku dot edu</h6>
+<div style="margin: 15px">
+	<script type="text/javascript"><!--
+	google_ad_client = "pub-1877423766388302";
+	/* academic bottom */
+	google_ad_slot = "0892719297";
+	google_ad_width = 468;
+	google_ad_height = 60;
+	//-->
+	</script>
+	<script type="text/javascript"
+	src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+	</script>
+</div>
+<style type="text/css">
+.badge {
+background-image: url(images/badge_color_blacktext_25.png);
+width:96px;
+height:64px;
+margin: 2em auto;
+}
+.badge:hover {
+background-image: url(images/badge_color_blacktext.png);
+}
+.badge a {
+display:block;
+width:96px;
+height:64px;
+}
+.badge a {
+background-image: url(images/badge_color_blacktext_25.png);
+display:block;
+width:96px;
+height:64px;
+}
+.badge a:hover {
+background-image: url(images/badge_color_blacktext.png);
+}
+</style>
+<div class="badge"><a href="http://www.ubuntu.com/"></a></div>
+
+
+    </div>
+</div>
+</body>
+</html>

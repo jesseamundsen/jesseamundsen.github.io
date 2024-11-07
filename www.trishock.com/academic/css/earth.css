@@ -1,0 +1,285 @@
+/* base body style */
+body
+{
+    background-image: url(../images/background.jpg);
+    background-repeat: no-repeat;
+    background-color: #FFF;
+    font-family: Arial, Verdana, Tahoma;
+    font-size: 12px;
+    margin: 12px;
+}
+h1
+{
+	display: inline;
+	padding: 0;
+	margin: 0;
+}
+h2
+{
+	display: inline;
+	padding: 0;
+	margin: 0;
+	font-family: Arial, Verdana, Tahoma;
+	font-weight: bold;
+	font-size: 13px;
+	color: #666;
+}
+h4
+{
+	display: inline;
+	padding: 0;
+	margin: 0;
+	font-family: Arial, Verdana, Tahoma;
+    font-size:11px;
+    font-weight: bold;
+    color: #444;
+}
+h5
+{
+	display: inline;
+	padding: 0;
+	margin: 0;
+    margin-left: 8px;
+    font-family: Arial, Verdana, Tahoma;
+    font-size: 9px;
+    font-weight: normal;
+    font-style: normal;
+    color: #9d9d9d;
+}
+h6
+{
+	display: inline;
+	padding: 0;
+	margin: 0;
+	font-family: Arial, Verdana, Tahoma;
+    font-size: 10px;
+    color: #AAA;
+}
+hr.invis
+{
+	display: none;
+}
+
+/* page container and wrapper */
+#page
+{
+	width: 650px;
+	margin: 0 auto;
+}
+
+/* header styles */
+#header
+{
+	background-image: url(../images/menubg.png);
+	background-repeat: no-repeat;
+    background-color: #d9ffda;
+    padding: 4px;
+    border: 1px solid #CCC;
+    height: 23px;
+}
+#header hr
+{
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+#header a.hlink
+{
+    float: left;
+    font-family: Arial, Verdana, Tahoma;
+    font-weight: bold;
+    font-size: 20px;
+    color: #030;
+    margin-left: 4px;
+    text-decoration: none;
+}
+
+/* navigation list */
+#navcontainer
+{
+    float: right;
+    margin-top: 2px;
+}
+#navlist
+{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#navlist li
+{
+	display: inline;
+	padding: 0;
+	margin: 0px 2px 0px 0px;
+}
+#navlist li:before
+{
+	font-family: Times New Roman;
+	font-size: larger;
+	content: url(../images/topbullet.gif);
+	margin: 0px 2px 0px 0px;
+}
+#navlist li:first-child:before
+{
+	content: "";
+}
+
+/* content styles */
+#content
+{
+    
+}
+#content .item
+{
+    margin: 8px 0px;
+}
+#content .itemheader
+{
+    background-color: #EEE;
+    text-align: left;
+    border-bottom: 1px solid #CCC;
+    padding: 4px 8px;
+}
+#content .itembody
+{
+    padding: 10px;
+    background-color: #F5F5F5;
+    text-align: justify;
+    border-bottom: 1px solid #CCC;
+}
+#content .divider
+{
+	border-top: 1px solid #CCC;
+	width: 50%;
+	text-align: left;
+	margin-bottom: 4px;
+	height: 1px;
+}
+#content .center
+{
+	margin: 0 auto;
+}
+
+/* footer styles */
+#footer
+{
+    padding: 4px;
+	text-align: center;
+}
+
+/* link styles */
+.list li a, .link a
+{
+    font-family: Arial, Verdana, Tahoma;
+    font-weight: normal;
+    text-decoration: none;
+    font-size: 13px;
+    color: #060;
+}
+.list li a:hover, .link a:hover
+{
+    font-family: Arial, Verdana, Tahoma;
+    font-weight: normal;
+    text-decoration: underline;
+    color: #003;
+}
+
+/* style for all base text */
+i
+{
+    margin-left: 4px;
+    font-family: Arial, Verdana, Tahoma;
+    font-size: 9px;
+    font-weight: normal;
+    color: #657a67;
+    font-style: normal;
+}
+.contentheader
+{
+    font-family: Arial, Verdana, Tahoma;
+    font-size:11px;
+    font-weight: bold;
+    color: #444;
+}
+/* tables */
+th
+{
+    font-family: Arial, Verdana, Tahoma;
+    font-size:11px;
+    font-weight: bold;
+    color: #444;
+    padding: 0px 4px;
+    background-color: #E1E1E1;
+    border: 1px solid #CCC;
+}
+table
+{
+    padding-right: 12px;
+}
+td
+{
+    padding: 0px 4px;
+    vertical-align: top;
+}
+.class
+{
+	width: 240px;
+}
+.abbrev
+{
+	width: 60px;
+}
+.math
+{
+	width: 560px;
+}
+.mathimg
+{
+	text-align: center;
+	padding: 10px 0px;
+	width: 400px;
+}
+.mathtxt
+{
+	text-align: left;
+	padding: 10px 0px;
+	width: 160px;
+}
+
+/* lists */
+ol
+{
+	list-style-type: disc;
+	color: #666;
+}
+
+/* paragraphs */
+p
+{
+	text-indent: 12px;
+}
+p.first
+{
+	margin-top: 8px;
+}
+p.home
+{
+	margin-top: 0;
+	text-indent: 0;
+}
+p.contentp
+{
+	margin: 0px 0px 8px 0px;
+	text-indent: 0;
+}
+p.contentp:last-child
+{
+	margin-bottom: 0;
+}
+
+/* Photo */
+#photo
+{
+    margin: 10px 0;
+    text-align: center;
+}
