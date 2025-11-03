@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "FeatureCollections and ST_GeomFromGeoJSON() in PostGIS"
+title:  "Dealing with GeoJSON feature collections in PostGIS"
 date:   2025-11-02 21:06:00 -0500
 tags: postgis postgresql
 ---
