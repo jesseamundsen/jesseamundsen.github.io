@@ -129,3 +129,18 @@ When a feature collection contains multiple features, they will be represented a
 | Feature | Polygon | {} | POLYGON\(\(-117.643578... |
 | Feature | Polygon | {} | POLYGON\(\(-113.997757... |
 | Feature | LineString | {} | LINESTRING\(-112.2041... |
+
+## The Inverse
+
+If you have geometry data and want to represent it as a FeatureCollection, you can construct the appropriate GeoJSON using the built in JSON functions of PostgreSQL:
+
+```sql
+select jsonb_build_object('type','FeatureCollection',
+    'features',jsonb_agg(features)) geojson
+from (
+    select 'Feature' type
+        ,to_jsonb(t) - 'geom' properties
+        ,st_asgeojson(t.geom)::jsonb geometry
+    from public.twogeoms t
+) features;
+```
