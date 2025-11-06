@@ -60,7 +60,7 @@ There are three representations of GeoJSON data to account for.
 }
 ```
 
-Constructing a function that handles these three representations and provides back a standardized table of data complete with a PostGIS geometry is relatively straightforward.
+Constructing a function that handles these three representations and provides back a standardized table of data complete with a PostGIS geometry is accomplished using the JSON functions within PostgreSQL.
 
 ```sql
 drop function if exists public.geojsontogeom;
@@ -68,47 +68,18 @@ create function public.geojsontogeom(geojson jsonb)
 returns table (featuretype text, geometrytype text, properties jsonb, geom geometry)
 language plpgsql
 as $function$
-declare
-    type text;
 begin
-
-    drop table if exists features;
-    create temp table features
-    (featuretype text, geometrytype text, properties jsonb, geom geometry);
-
-    type = (select lower(geojson ->> 'type'));
-
-    if type = 'featurecollection' then
-        insert into features
-        select f.features ->> 'type' featuretype
-            ,f.features -> 'geometry' ->> 'type' geometrytype
-            ,f.features -> 'properties' properties
-            ,st_setsrid(st_geomfromgeojson(f.features ->> 'geometry'),4326) geometry
-        from (
-            select jsonb_array_elements(geojson -> 'features') features
-        ) f;
-    elsif type = 'feature' then
-        insert into features
-        select f.features ->> 'type' featuretype
-            ,f.features -> 'geometry' ->> 'type' geometrytype
-            ,f.features -> 'properties' properties
-            ,st_setsrid(st_geomfromgeojson(f.features ->> 'geometry'),4326) geometry
-        from (
-            select geojson features
-        ) f;
-    else
-        insert into features
-        select null featuretype
-            ,f.features ->> 'type' geometrytype
-            ,null
-            ,st_setsrid(st_geomfromgeojson(f.features),4326) geometry
-        from (
-            select geojson features
-        ) f;
-    end if;
-
-    return query select * from features;
-
+    return query
+    select f.features ->> 'type' featuretype
+        ,f.features -> 'geometry' ->> 'type' geometrytype
+        ,f.features -> 'properties' properties
+        ,st_setsrid(st_geomfromgeojson(f.features ->> 'geometry'),4326) geometry
+    from (
+        select jsonb_array_elements(case
+            when lower(geojson ->> 'type')='featurecollection' then geojson -> 'features'
+            when lower(geojson ->> 'type')='feature' then jsonb_build_array(geojson)
+            else jsonb_build_array(jsonb_build_object('type','Feature','geometry',geojson)) end) features
+    ) f;
 end
 $function$;
 ```
