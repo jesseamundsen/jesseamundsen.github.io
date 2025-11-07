@@ -10,4 +10,6 @@ My name is Jesse Amundsen. My main focus has been solving complex geospatial pro
 
 After a decade using locational datasets not targeted narrowly enough for the purpose of broadband reporting, I led the technical development of the Broadband Serviceable Location Fabric (BSLF) ([Reference #1](https://www.costquest.com/broadband-serviceable-location-fabric/), [Reference #2](https://help.bdc.fcc.gov/hc/en-us/articles/5375384069659-What-is-the-Location-Fabric)). The BSLF has been implemented by agencies such as the FCC and NTIA for the purposes of broadband reporting and is used in multiple federal funding programs (ex: [BEAD](https://broadbandusa.ntia.gov/funding-programs/broadband-equity-access-and-deployment-bead-program)).
 
-Along my journey I have become highly competent in PostGIS, using it to implement the majority of the geoprocessing pipeline that generates the BSLF. I enjoy thinking through geospatial problems, spatial data science challenges, and advocating for building long-lasting complex systems out of simpler constituent parts.
+Along my journey I have become highly competent in PostGIS, using it to implement the majority of the geoprocessing pipeline that generates the BSLF. Additional areas of strength include software architecture and HTTP APIs, each with a focus on understanding and implementing in a spatial context.
+
+I enjoy thinking through geospatial problems, spatial data science challenges, and advocating for building long-lasting complex systems out of simpler constituent parts.
