@@ -70,8 +70,7 @@ language plpgsql
 as $function$
 begin
     return query
-    select f.features ->> 'type' featuretype
-        ,f.features -> 'geometry' ->> 'type' geometrytype
+    select f.features -> 'geometry' ->> 'type' geometrytype
         ,f.features -> 'properties' properties
         ,st_setsrid(st_geomfromgeojson(f.features ->> 'geometry'),4326) geometry
     from (
