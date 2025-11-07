@@ -5,7 +5,7 @@ date:   2025-11-02 21:06:00 -0500
 tags: postgis postgresql
 ---
 
-One task I have come across repeatedly while building APIs or functions that accept GeoJSON is dealing with differing representations. The input data may be a geometry, a feature, or a feature collection. When utilizing PostGIS as a backend, I inevitably run into errors after naively using the `ST_GeomFromGeoJSON()` function directly to convert the input data into a PostGIS geometry:
+One task I have come across repeatedly while building APIs or functions that accept GeoJSON is dealing with differing representations. The input data may be a geometry, a feature, or a feature collection. When utilizing PostGIS as a backend, I inevitably run into errors after naively feeding input data directly into the `ST_GeomFromGeoJSON()` function:
 
 ```
 [XX000] ERROR: invalid GeoJson representation
@@ -65,7 +65,7 @@ Constructing a function that handles these three representations and provides ba
 ```sql
 drop function if exists public.geojsontogeom;
 create function public.geojsontogeom(geojson jsonb)
-returns table (featuretype text, geometrytype text, properties jsonb, geom geometry)
+returns table (geometrytype text, properties jsonb, geom geometry)
 language plpgsql
 as $function$
 begin
@@ -91,11 +91,11 @@ select * from public.geojsontogeom('<geojson>');
 
 When a feature collection contains multiple features, they will be represented as rows in the results:
 
-| featuretype | geometrytype | properties | geometry |
-| :--- | :--- | :--- | :--- |
-| Feature | Polygon | {} | POLYGON\(\(-117.643578... |
-| Feature | Polygon | {} | POLYGON\(\(-113.997757... |
-| Feature | LineString | {} | LINESTRING\(-112.2041... |
+|  geometrytype | properties | geometry |
+|  :--- | :--- | :--- |
+|  Polygon | {} | POLYGON\(\(-117.643578... |
+|  Polygon | {} | POLYGON\(\(-113.997757... |
+|  LineString | {} | LINESTRING\(-112.2041... |
 
 <br/>
 
