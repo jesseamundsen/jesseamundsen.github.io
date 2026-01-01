@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Sometimes noise is the data"
-date:   2025-11-30 19:42:00 -0500
+date:   2025-12-10 13:11:00 -0500
 tags: ai software thinking
 ---
 
