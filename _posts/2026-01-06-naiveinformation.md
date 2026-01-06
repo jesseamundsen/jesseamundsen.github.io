@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "More is not always better"
+title:  "More is not always better as complexity grows"
 date:   2026-01-06 11:13:00 -0500
 tags: ai software thinking science
 ---
