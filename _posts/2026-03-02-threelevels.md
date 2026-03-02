@@ -7,12 +7,9 @@ tags: software thinking abstraction duckdb spatial
 
 I tell people that I am a software developer, but that's not what I really do. I'm a problem solver that sometimes has to use code to solve problems I am faced with. When I was only a few years into my career, my boss once referred to me as a "hacker”, and I found a great truth in the term. My job wasn't to package and sell applications to users, it was to hack away and eventually solve complex problems involving spatial data and network routing. As I matured as a problem solver, I came to identify three different levels of abstraction.
 
-_For context, consider a request for some processing in a spatial database on data representing a collection of points and roads._
+_For context, consider a request for some processing in a spatial database on data representing a collection of points and roads. To join along or understand further, reference the [MTFCC Classifications](https://www2.census.gov/geo/pdfs/reference/mtfccs2025.pdf) and an [SQL script](/assets/threelevels_duckdb.sql) tailored for [DuckDB](https://duckdb.org)._
 1. _How many points are within 100m of a primary road?_
 2. _How many points are within 100m of a secondary road?_
-
-_To join along or understand further, see these references_
-> [MTFCC Classifications](https://www2.census.gov/geo/pdfs/reference/mtfccs2025.pdf)
 
 
 
@@ -72,9 +69,7 @@ order by 1;
 <br/>
 ### Level 3: Solves multiple known and unknown problems
 
-At this level, we are predicting and anticipating the future. We ask ourselves what requests will come next and what other questions we can answer. We don't just answer the things we know have been asked of us, we explore further. The solution we create is capable of answering multiple known and _unknown_ questions.
-
-Below is a recursive CTE that expands the search radius of 100m for unmatched points to efficiently determine the nearest `road_id` for every `point_id` regardless of distance.
+At this level, we are predicting and anticipating the future. We ask ourselves what requests will come next and what other questions we can answer. We don't just answer the things we know have been asked of us, we explore further. The solution we create is capable of answering multiple known and _unknown_ questions. We elect to create a new data set that provides the closest `road_id` for every `point_id` regardless of distance.
 
 ```sql
 drop table if exists points_all;
@@ -116,15 +111,15 @@ order by point_id, distancem;
 </table>
 </p>
 
-Consider how much more we can answer with the above solution that creates a derivative table `points_all` showing _every relationship_, regardless of road classification _or_ distance.
+Consider how much more we can now answer with our derivative table `points_all` showing _every relationship_, regardless of road classification _or_ distance.
 
-* How many points are within 200m of any road? 1km?
+* How many points are within 200m of any road? Further than 1km?
 * Statistics like average, percentiles, and more can be determined.
-* We can bin the results into distance bands for all roads or by classification.
+* We can bin the results into distance bands (0-10m, 10-25m, 25-50m, etc.) for all roads or by classification.
 
 <br/>
 ### Simple example, but with big implications
 
-The example provided is simple. The implications are large. What if our data set was hundreds of millions of points and roads? If approached with the approach of the first level, each query may run for hours before returning a result. If subsequent requests are made to determine the count of points for different distances or classifications, the solution will, again, be hours away. When approached with the mindset of level 3, we are ready to answer those previously unknown questions quickly.
+The example provided is simple. The implications are large. What if our data set was hundreds of millions of points? If we aproach with the mindset of level 1, each query may run for hours before returning a result. If subsequent requests are made to determine the count of points for different distances or classifications, the solution will, again, be hours away. With the knowledge of more information we get in level 2 or level 3, we may choose to ask different questions.
 
 The provided example uses a spatial data analysis task, but the same principles can be applied to software development. The lessons are clear: Work with a more expansive understanding of the problems you are solving while focusing on building tools and capabilities rather than just generating one off answers.
