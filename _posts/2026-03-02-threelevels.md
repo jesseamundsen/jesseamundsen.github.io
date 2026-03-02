@@ -74,32 +74,13 @@ At this level, we are predicting and anticipating the future. We ask ourselves w
 ```sql
 drop table if exists points_all;
 create table points_all as
-with recursive nn as (
-  select id point_id
-    ,null::int road_id
-    ,geom
-    ,1 n
-  from points
-  union
-  select p.point_id
-    ,r.tlid road_id
-    ,p.geom
-    ,p.n + 1
-  from (
-    select * 
-    from nn 
-    where road_id is null
-  ) p
-  left join roads r on st_dwithin(p.geom, r.geom, 100*p.n)
-)
-select distinct on (point_id) point_id
-  ,road_id
-  ,mtfcc classification
-  ,st_distance(nn.geom, r.geom) distancem
-from nn
-join roads r on r.tlid=nn.road_id
-where road_id is not null
-order by point_id, distancem;
+select distinct on (p.id)
+   p.id point_id
+  ,r.tlid road_id
+  ,r.mtfcc classification
+  ,st_distance(p.geom,r.geom) distancem
+from points p,roads r
+order by 1,3
 ```
 <p>
 <table><tr><th>point_id</th><th>road_id</th><th>classification</th><th>distancem</th></tr>
