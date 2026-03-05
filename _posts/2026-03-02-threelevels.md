@@ -7,16 +7,16 @@ tags: software thinking abstraction duckdb spatial
 
 I tell people that I am a software developer, but that's not what I really do. I'm a problem solver that sometimes has to use code to solve problems I am faced with. When I was only a few years into my career, my boss once referred to me as a "hacker”, and I found a great truth in the term. My job wasn't to package and sell applications to users, it was to hack away and eventually solve complex problems involving spatial data and network routing. As I matured as a problem solver, I came to identify three different levels of abstraction.
 
-_For context, consider a request for some processing in a spatial database on data representing a collection of points and roads. To join along or understand further, reference the [MTFCC Classifications](https://www2.census.gov/geo/pdfs/reference/mtfccs2025.pdf) and an [SQL script](/assets/threelevels_duckdb.sql) tailored for [DuckDB](https://duckdb.org)._
-1. _How many points are within 100m of a primary road?_
-2. _How many points are within 100m of a secondary road?_
+_For context, consider a the following two requests for some spatial data representing a collection of points and roads. To join along or understand further, reference the [MTFCC Classifications](https://www2.census.gov/geo/pdfs/reference/mtfccs2025.pdf) and an [SQL script](/assets/threelevels_duckdb.sql) tailored for [DuckDB](https://duckdb.org)._
+1. _How many points are within 100m of a primary road (`mtfcc` of S1100)?_
+2. _How many points are within 100m of a secondary road (`mtfcc` if S1200)?_
 
 
 
 <br/>
 ### Level 1: Solves one known problem
 
-In the first level, abstraction is nearly non-existent. We write two queries, one to answer each request. Our solution doesn't provide the ability to answer any questions beyond the identified requests. These types of solutions lack reusability and are more likely to be redundant with other solutions created in the past and future. They only require knowledge of the task at hand.
+In the first level, abstraction is nearly non-existent. We write two queries, one to answer each request. Our solution doesn't provide the ability to answer any questions beyond the two requests. These types of solutions lack reusability and are more likely to be redundant with other solutions created in the past and future.
 
 ```sql
 select count(distinct p.id) Count
@@ -42,13 +42,14 @@ where r.mtfcc='S1200';
 <br/>
 ### Level 2: Solves multiple known problems
 
-Instead of answering each request independently, we create a solution that can answer both requests. As a bonus, we reveal additional information as we can now see the distribution of nearest road types for _any point_ within 100m. This depended on the fact that we had knowledge of more than one request. When working in teams or organizations, effective communication becomes increasingly important at this level. It's easier to create solutions for known problems than unknown ones.
+Instead of answering each request independently, we create a solution that can answer both requests. This depended on the fact that we had knowledge of more than one request. When working in teams or organizations, effective communication becomes increasingly important at this level. It's easier to create solutions for known problems than unknown ones.
 
 ```sql
 select mtfcc Classification
   ,count(distinct p.id) Count
 from points p
 join roads r on st_dwithin(p.geom,r.geom,100)=true
+where mtfcc in ('S1100','S1200')
 group by 1
 order by 1;
 ```
@@ -56,12 +57,6 @@ order by 1;
 <table><tr><th>Classification</th><th>Count</th></tr>
 <tr><td>S1100</td><td>26</td></tr>
 <tr><td>S1200</td><td>107</td></tr>
-<tr><td>S1400</td><td>1182</td></tr>
-<tr><td>S1500</td><td>2</td></tr>
-<tr><td>S1630</td><td>3</td></tr>
-<tr><td>S1640</td><td>2</td></tr>
-<tr><td>S1710</td><td>1</td></tr>
-<tr><td>S1750</td><td>8</td></tr>
 </table>
 </p>
 
@@ -69,7 +64,7 @@ order by 1;
 <br/>
 ### Level 3: Solves multiple known and unknown problems
 
-At this level, we are predicting and anticipating the future. We ask ourselves what requests will come next and what other questions we can answer. We don't just answer the things we know have been asked of us, we explore further. The solution we create is capable of answering multiple known and _unknown_ questions. We elect to create a new data set that provides the closest `road_id` for every `point_id` regardless of distance.
+At this level, we are predicting and anticipating the future. We ask ourselves what requests will come next and what other information we can discover. We don't just answer the things that have been asked of us, we explore further. The solution we create is capable of answering multiple known and _unknown_ questions. We elect to create a new data set that provides the closest `road_id` for every `point_id` regardless of distance.
 
 ```sql
 drop table if exists points_all;
@@ -80,7 +75,7 @@ select distinct on (p.id)
   ,r.mtfcc classification
   ,st_distance(p.geom,r.geom) distancem
 from points p,roads r
-order by 1,3
+order by 1,3;
 ```
 <p>
 <table><tr><th>point_id</th><th>road_id</th><th>classification</th><th>distancem</th></tr>
@@ -101,6 +96,6 @@ Consider how much more we can now answer with our derivative table `points_all` 
 <br/>
 ### Simple example, but with big implications
 
-The example provided is simple. The implications are large. What if our data set was hundreds of millions of points? If we aproach with the mindset of level 1, each query may run for hours before returning a result. If subsequent requests are made to determine the count of points for different distances or classifications, the solution will, again, be hours away. With the knowledge of more information we get in level 2 or level 3, we may choose to ask different questions.
+The example provided is simple. The implications are large. What if our data set was hundreds of millions of points? If we aproach with the mindset of level 1 or 2, each query may run for hours before returning a result. All of the detailed information about how the points relate to the roads is lost. If subsequent requests are made to determine the count of points for different distances or classifications, the solution will, again, be hours away. Using the additional information we have from the approach in level3, we may choose to ask different questions in the future or not have to ask new ones at all.
 
-The provided example uses a spatial data analysis task, but the same principles can be applied to software development. The lessons are clear: Work with a more expansive understanding of the problems you are solving while focusing on building tools and capabilities rather than just generating one off answers.
+The provided example uses a spatial data analysis task, but the same principles can be applied to software development. The lessons are clear: Work with a more expansive understanding of the problems you are solving while focusing on building tools and capabilities rather than just generating one off solutions.
