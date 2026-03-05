@@ -9,7 +9,7 @@ I used to joke that my job was to continually make myself obsolete. In the curre
 
 Instead of tending to ETL processes or building boilerpate applications, I had time to experiment and explore. My job became more focused on ideas, architecture, and mentorship and less on process and maintenance. I taught others to become the tenders of processes and how to build simple pieces of software that can be re-used. In the end, my usefulness and utility actually *increased*. There was no pink slip waiting for me.
 
-|<a title="Ayebare innocent, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Old_computer_lab.jpg"><img width="512" alt="Old computer lab" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Old_computer_lab.jpg/512px-Old_computer_lab.jpg?20180811122327"></a>|
+|<a title="Ayebare innocent, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Old_computer_lab.jpg"><img width="512" alt="Old computer lab" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Old_computer_lab.jpg/500px-Old_computer_lab.jpg?20180811122327"></a>|
 |:--:| 
 | *Lots of obsolete CRT monitors* |
 

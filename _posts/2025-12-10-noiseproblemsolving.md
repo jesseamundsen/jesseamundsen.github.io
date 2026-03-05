@@ -7,7 +7,7 @@ tags: ai software thinking
 
 In the mid 1960's, two scientists from Bell Labs named Arno Penzias and Robert Wilson were trying to remove sources of interference in readings from a radio telescope to perform research. No matter what they did, a constant source of noise plagued their efforts. They went to great lengths in attempts to rectify the issue, going so far as to remove pigeon droppings from the telescope. Baffled and convinced something was wrong, it took a shift in thinking to explain their observations. Eventually, they accepted that their equipment was working fine, focusing on a theoretical explanation rather than an equipment issue. What they were measuring was the [Cosmic Background Radiation](https://www.aps.org/apsnews/2002/07/discovery-cosmic-microwave-background) left over from the creation of the universe.
 
-|<a title="Fabioj, CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Bell_Labs_Horn_Antenna_Crawford_Hill_NJ.jpg"><img width="512" alt="Bell Labs Horn Antenna Crawford Hill NJ" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Bell_Labs_Horn_Antenna_Crawford_Hill_NJ.jpg/512px-Bell_Labs_Horn_Antenna_Crawford_Hill_NJ.jpg?20240815212713"></a>|
+|<a title="Fabioj, CC BY-SA 3.0 &lt;http://creativecommons.org/licenses/by-sa/3.0/&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Bell_Labs_Horn_Antenna_Crawford_Hill_NJ.jpg"><img width="512" alt="Bell Labs Horn Antenna Crawford Hill NJ" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Bell_Labs_Horn_Antenna_Crawford_Hill_NJ.jpg/500px-Bell_Labs_Horn_Antenna_Crawford_Hill_NJ.jpg?20240815212713"></a>|
 |:--:|
 | *Bell Labs Horn Antenna* |
 
