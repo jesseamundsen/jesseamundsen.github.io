@@ -66,9 +66,9 @@ group by 1
 order by 1;
 ```
 <p>
-<table><tr><th>Classification</th><th>Count</th></tr>
-<tr><td>S1100</td><td>26</td></tr>
-<tr><td>S1200</td><td>107</td></tr>
+<table><tr><th>Classification</th><th>Count</th><th>Average50m</th></tr>
+<tr><td>S1100</td><td>26</td><td>16.55423319992319</td></tr>
+<tr><td>S1200</td><td>107</td><td>20.890220890606937</td></tr>
 </table>
 </p>
 
