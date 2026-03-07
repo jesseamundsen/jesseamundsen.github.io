@@ -52,7 +52,7 @@ Instead of answering each request independently, we create a solution that can a
 ```sql
 select t.mtfcc Classification
   ,count(*) Count
-  ,avg(case when t.distancem<=50 then t.distancem else null end) Average50m
+  ,avg(case when t.distancem<50 then t.distancem else null end) Average50m
 from (
   select distinct on (p.id)
     st_distance(p.geom,r.geom) distancem
@@ -87,7 +87,17 @@ select distinct on (p.id)
   ,r.mtfcc classification
   ,st_distance(p.geom,r.geom) distancem
 from points p,roads r
-order by 1,3;
+order by 1,4;
+
+select 1 question
+  ,count(*) answer
+from points_all
+where classification='S1100' and distancem<100
+union all
+select 2 question
+  ,avg(distancem) answer
+from points_all
+where classification='S1200' and distancem<50;
 ```
 <p>
 <table><tr><th>point_id</th><th>road_id</th><th>classification</th><th>distancem</th></tr>
@@ -99,7 +109,16 @@ order by 1,3;
 </table>
 </p>
 
-Consider how much more we can now answer with our `points_all` table showing _every relationship_, regardless of road classification _or_ distance.
+<p>
+<table><tr><th>question</th><th>answer</th></tr>
+<tr><td>1</td><td>25</td></tr>
+<tr><td>2</td><td>20.805651780746526</td></tr>
+</table>
+</p>
+
+At this point we ask ourselves "Why are the answers different? Are either or both of my analyses flawed?". By creating our unified solution we have revealed something that escaped us before. Why do the answers differ? The solutions in level 1 and 2 did not care if a given road with a classification was the _closest_ road to a given point, only if the point was within the tolerance of the spatial join. Our answers differ because they are answering different questions. We have more information now, and can provide more context around the results as well as confirm or alter the task to match the expectations of whoever requested the analysis. Did they actually want the analysis done using a nearest neighbor or not?
+
+Regardless, consider how much more we can now answer with our `points_all` table showing _every relationship_, regardless of road classification _or_ distance.
 
 * How many points are within 200m of any road? Further than 1km?
 * Statistics like average, percentiles, and more can be determined.
