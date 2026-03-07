@@ -54,7 +54,7 @@ select t.mtfcc Classification
   ,count(*) Count
   ,avg(case when t.distancem<50 then t.distancem else null end) Average50m
 from (
-  select distinct on (p.id)
+  select distinct on (p.id,r.mtfcc)
     st_distance(p.geom,r.geom) distancem
     ,r.mtfcc
   from points p
